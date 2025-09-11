@@ -10,18 +10,9 @@
             "role": "Developer"
         }
     ],
-    "repositories": [
-        {
-            "type": "path",
-            "url": "/Users/tim.alexander/baseapi-workspace/baseapi",
-            "options": {
-                "symlink": true
-            }
-        }
-    ],
     "require": {
         "php": ">=8.4",
-        "timanthonyalexander/base-api": "@dev"
+        "baseapi/baseapi": "dev-feature/split"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.0",
@@ -53,7 +44,7 @@
             "@php -r \"if (!is_dir('storage')) mkdir('storage', 0755, true);\"",
             "@php -r \"if (!is_dir('storage/ratelimits')) mkdir('storage/ratelimits', 0755, true);\""
         ]
-    },
+    ],
     "minimum-stability": "dev",
     "prefer-stable": true
 }
