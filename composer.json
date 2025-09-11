@@ -1,0 +1,59 @@
+{
+    "name": "timanthonyalexander/base-api-template",
+    "description": "Project template for BaseAPI - a tiny, KISS-first PHP 8.4 framework",
+    "type": "project",
+    "license": "MIT",
+    "keywords": ["baseapi", "template", "skeleton", "php", "api"],
+    "authors": [
+        {
+            "name": "Tim Anthony Alexander",
+            "role": "Developer"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "path",
+            "url": "/Users/tim.alexander/baseapi-workspace/baseapi",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
+    "require": {
+        "php": ">=8.4",
+        "timanthonyalexander/base-api": "@dev"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0",
+        "phpstan/phpstan": "^1.12"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "serve": "php bin/console serve",
+        "phpstan": "phpstan analyse --memory-limit=256M",
+        "test": "phpunit"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "preferred-install": "dist"
+    },
+    "scripts": {
+        "post-create-project-cmd": [
+            "@php -r \"copy('.env.example', '.env');\"",
+            "@php -r \"if (!is_dir('storage')) mkdir('storage', 0755, true);\"",
+            "@php -r \"if (!is_dir('storage/ratelimits')) mkdir('storage/ratelimits', 0755, true);\""
+        ]
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

@@ -1,0 +1,23 @@
+#!/usr/bin/env php
+<?php
+
+// BaseAPI Template Console Shim
+// This script forwards commands to the framework's console
+
+$vendorConsole = __DIR__ . '/../vendor/bin/console';
+
+if (!file_exists($vendorConsole)) {
+    echo "Error: BaseAPI framework not installed. Run 'composer install' first.\n";
+    exit(1);
+}
+
+// Forward all arguments to the framework console
+$command = escapeshellcmd($vendorConsole);
+$args = array_slice($argv, 1);
+
+foreach ($args as $arg) {
+    $command .= ' ' . escapeshellarg($arg);
+}
+
+passthru($command, $exitCode);
+exit($exitCode);
