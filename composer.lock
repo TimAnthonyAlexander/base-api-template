@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9307d67b5b0cda4d0e8d4af25661f300",
+    "content-hash": "52039dcd944e8904ddfa57e87286d488",
     "packages": [
         {
             "name": "baseapi/baseapi",
-            "version": "dev-feature/split",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TimAnthonyAlexander/base-api.git",
-                "reference": "94b4cf63411f49687576574bc3f47028de7fe083"
+                "reference": "1fa1d17fadd1bae77e591151824a34c292e64c05"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TimAnthonyAlexander/base-api/zipball/94b4cf63411f49687576574bc3f47028de7fe083",
-                "reference": "94b4cf63411f49687576574bc3f47028de7fe083",
+                "url": "https://api.github.com/repos/TimAnthonyAlexander/base-api/zipball/1fa1d17fadd1bae77e591151824a34c292e64c05",
+                "reference": "1fa1d17fadd1bae77e591151824a34c292e64c05",
                 "shasum": ""
             },
             "require": {
@@ -28,6 +28,7 @@
                 "phpstan/phpstan": "^1.12",
                 "phpunit/phpunit": "^11.0"
             },
+            "default-branch": true,
             "bin": [
                 "bin/console"
             ],
@@ -62,9 +63,9 @@
             ],
             "support": {
                 "issues": "https://github.com/TimAnthonyAlexander/base-api/issues",
-                "source": "https://github.com/TimAnthonyAlexander/base-api/tree/feature/split"
+                "source": "https://github.com/TimAnthonyAlexander/base-api/tree/v0.3.0"
             },
-            "time": "2025-09-11T16:19:59+00:00"
+            "time": "2025-09-11T16:36:00+00:00"
         },
         {
             "name": "graham-campbell/result-type",
