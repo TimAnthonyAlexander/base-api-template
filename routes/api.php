@@ -5,6 +5,7 @@ use App\Controllers\HealthController;
 use App\Controllers\LoginController;
 use App\Controllers\LogoutController;
 use App\Controllers\MeController;
+use App\Controllers\SignupController;
 use BaseApi\Http\Middleware\RateLimitMiddleware;
 use BaseApi\Http\Middleware\AuthMiddleware;
 
@@ -27,6 +28,13 @@ $router->post(
 );
 
 // Authentication endpoints
+$router->post(
+    '/auth/signup',
+    [
+        SignupController::class,
+    ],
+);
+
 $router->post(
     '/auth/login',
     [

@@ -24,6 +24,15 @@ export interface PostHealthRequestBody {
 
 export type PostHealthResponse = Envelope<any>;
 
+export interface PostSignupRequestBody {
+  name: string;
+  email: string;
+  password: string;
+  request?: any;
+}
+
+export type PostSignupResponse = Envelope<{ user: any[] }>;
+
 export interface PostLoginRequestBody {
   email: string;
   password: string;
