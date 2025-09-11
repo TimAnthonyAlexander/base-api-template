@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/TimAnthonyAlexander/base-api.git",
-                "reference": "382aea594965e208411b279b20a41aa93e02adc8"
+                "reference": "cf3396c16acccae4585a378bead4d6a7bb53e46d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TimAnthonyAlexander/base-api/zipball/382aea594965e208411b279b20a41aa93e02adc8",
-                "reference": "382aea594965e208411b279b20a41aa93e02adc8",
+                "url": "https://api.github.com/repos/TimAnthonyAlexander/base-api/zipball/cf3396c16acccae4585a378bead4d6a7bb53e46d",
+                "reference": "cf3396c16acccae4585a378bead4d6a7bb53e46d",
                 "shasum": ""
             },
             "require": {
@@ -63,9 +63,9 @@
             ],
             "support": {
                 "issues": "https://github.com/TimAnthonyAlexander/base-api/issues",
-                "source": "https://github.com/TimAnthonyAlexander/base-api/tree/v0.3.1"
+                "source": "https://github.com/TimAnthonyAlexander/base-api/tree/main"
             },
-            "time": "2025-09-11T19:07:13+00:00"
+            "time": "2025-09-11T19:20:05+00:00"
         },
         {
             "name": "graham-campbell/result-type",
