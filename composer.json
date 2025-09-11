@@ -3,7 +3,13 @@
     "description": "Project template for BaseAPI - a tiny, KISS-first PHP 8.4 framework",
     "type": "project",
     "license": "MIT",
-    "keywords": ["baseapi", "template", "skeleton", "php", "api"],
+    "keywords": [
+        "baseapi",
+        "template",
+        "skeleton",
+        "php",
+        "api"
+    ],
     "authors": [
         {
             "name": "Tim Anthony Alexander",
@@ -31,6 +37,11 @@
     "scripts": {
         "serve": "php bin/console serve",
         "phpstan": "phpstan analyse --memory-limit=256M",
+        "post-create-project-cmd": [
+            "@php -r \"copy('.env.example', '.env');\"",
+            "@php -r \"if (!is_dir('storage')) mkdir('storage', 0755, true);\"",
+            "@php -r \"if (!is_dir('storage/ratelimits')) mkdir('storage/ratelimits', 0755, true);\""
+        ],
         "test": "phpunit"
     },
     "config": {
@@ -38,13 +49,6 @@
         "sort-packages": true,
         "preferred-install": "dist"
     },
-    "scripts": {
-        "post-create-project-cmd": [
-            "@php -r \"copy('.env.example', '.env');\"",
-            "@php -r \"if (!is_dir('storage')) mkdir('storage', 0755, true);\"",
-            "@php -r \"if (!is_dir('storage/ratelimits')) mkdir('storage/ratelimits', 0755, true);\""
-        ]
-    ],
     "minimum-stability": "dev",
     "prefer-stable": true
 }
