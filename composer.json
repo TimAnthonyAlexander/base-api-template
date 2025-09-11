@@ -1,5 +1,5 @@
 {
-    "name": "baseapi/base-api-template",
+    "name": "baseapi/baseapi-template",
     "description": "Project template for BaseAPI - a tiny, KISS-first PHP 8.4 framework",
     "type": "project",
     "license": "MIT",
