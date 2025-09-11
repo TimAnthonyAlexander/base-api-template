@@ -22,7 +22,7 @@ This is a project created using the BaseAPI framework template.
 
 4. **Test your API:**
    ```bash
-   curl http://localhost:8000/health
+   curl http://localhost:7879/health
    ```
 
 ## Available Endpoints
@@ -34,16 +34,39 @@ This is a project created using the BaseAPI framework template.
 
 ## Development Commands
 
-- `php bin/console serve` - Start development server
+- `php bin/console serve` - Start development server (port 7879)
 - `php bin/console make:controller NameController` - Generate controller
 - `php bin/console make:model Name` - Generate model
 - `php bin/console migrate:generate` - Generate migration plan
 - `php bin/console migrate:apply` - Apply migrations
 - `php bin/console types:generate` - Generate TypeScript types
 
+## Framework
+
+This template uses the [BaseAPI framework](https://packagist.org/packages/baseapi/baseapi) from Packagist:
+
+```json
+{
+    "require": {
+        "baseapi/baseapi": "dev-feature/split"
+    }
+}
+```
+
+The framework provides all core functionality while this template provides the project structure and example implementation.
+
+## Configuration
+
+The template is pre-configured for:
+- **API Port**: 7879 (configurable via `APP_PORT`)
+- **MySQL Port**: 7878 (configurable via `DB_PORT`)
+- Session-based authentication
+- Rate limiting on specific endpoints
+- CORS handling for frontend integration
+
 ## Documentation
 
-For full documentation, visit the [BaseAPI repository](https://github.com/timanthonyalexander/base-api).
+For full framework documentation, visit the [BaseAPI repository](https://github.com/timanthonyalexander/base-api).
 
 ---
 
