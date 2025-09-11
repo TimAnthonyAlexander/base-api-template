@@ -18,4 +18,9 @@ class User extends BaseModel
     public static array $indexes = [
         'email' => 'unique',
     ];
+
+    public function checkPassword(string $password): bool
+    {
+        return password_verify($password, $this->password);
+    }
 }

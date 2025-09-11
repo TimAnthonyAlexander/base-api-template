@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\User;
 use BaseApi\Controllers\Controller;
 use BaseApi\Http\JsonResponse;
 use BaseApi\Http\Attributes\ResponseType;
@@ -14,25 +15,28 @@ use BaseApi\Http\Attributes\Tag;
 #[Tag('Authentication')]
 class LoginController extends Controller
 {
-    public string $userId = '';
+    public string $email = '';
     public string $password = '';
 
-    #[ResponseType(['userId' => 'string'])]
+    #[ResponseType(['user' => 'array'])]
     public function post(): JsonResponse
     {
         $this->validate([
-            'userId' => 'required|string',
+            'email' => 'required|string',
             'password' => 'required|string',
         ]);
 
-        // Set user ID in session (SessionStartMiddleware handles session initialization)
-        $_SESSION['user_id'] = $this->userId;
+        $user = User::firstWhere('email', '=', $this->email);
+
+        if (!$user->checkPassword($this->password)) {
+            return JsonResponse::error('Invalid credentials', 401);
+        }
+
+        $_SESSION['user_id'] = $user->id ?? null;
 
         // Regenerate session ID to mitigate fixation attacks
         session_regenerate_id(true);
 
-        return JsonResponse::ok([
-            'userId' => $this->userId
-        ]);
+        return JsonResponse::ok($user->jsonSerialize());
     }
 }
