@@ -15,12 +15,14 @@ use BaseApi\Http\Attributes\Tag;
 class LoginController extends Controller
 {
     public string $userId = '';
+    public string $password = '';
 
     #[ResponseType(['userId' => 'string'])]
     public function post(): JsonResponse
     {
         $this->validate([
-            'userId' => 'required|string'
+            'userId' => 'required|string',
+            'password' => 'required|string',
         ]);
 
         // Set user ID in session (SessionStartMiddleware handles session initialization)

@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/TimAnthonyAlexander/base-api.git",
-                "reference": "195c4730e385665dc604fe3b5b2ec515116077e3"
+                "reference": "94b4cf63411f49687576574bc3f47028de7fe083"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TimAnthonyAlexander/base-api/zipball/195c4730e385665dc604fe3b5b2ec515116077e3",
-                "reference": "195c4730e385665dc604fe3b5b2ec515116077e3",
+                "url": "https://api.github.com/repos/TimAnthonyAlexander/base-api/zipball/94b4cf63411f49687576574bc3f47028de7fe083",
+                "reference": "94b4cf63411f49687576574bc3f47028de7fe083",
                 "shasum": ""
             },
             "require": {
@@ -64,7 +64,7 @@
                 "issues": "https://github.com/TimAnthonyAlexander/base-api/issues",
                 "source": "https://github.com/TimAnthonyAlexander/base-api/tree/feature/split"
             },
-            "time": "2025-09-11T14:46:28+00:00"
+            "time": "2025-09-11T16:19:59+00:00"
         },
         {
             "name": "graham-campbell/result-type",
