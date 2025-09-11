@@ -6,6 +6,7 @@ use BaseApi\Controllers\Controller;
 use BaseApi\Http\JsonResponse;
 use BaseApi\App;
 use BaseApi\Database\DbException;
+use BaseApi\Database\Drivers\SqliteDriver;
 
 class HealthController extends Controller
 {
@@ -24,13 +25,16 @@ class HealthController extends Controller
                 if ($result == 1) {
                     $response['db'] = true;
 
-                    // Additional table check to confirm connectivity
-                    App::db()->raw('SHOW TABLES');
+                    if (App::db()->getConnection()->getDriver() instanceof SqliteDriver) {
+                        App::db()->raw('SELECT name FROM sqlite_master WHERE type="table"');
+                    } else {
+                        App::db()->raw('SHOW TABLES');
+                    }
                 } else {
                     return JsonResponse::error('Database check failed', 500);
                 }
-            } catch (DbException) {
-                return JsonResponse::error('Database connection failed', 500);
+            } catch (DbException $e) {
+                return JsonResponse::error('Database connection failed: ' . $e, 500);
             }
         }
 
