@@ -4,11 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "52039dcd944e8904ddfa57e87286d488",
+    "content-hash": "821130e385b9f8a9e14a8815b0347d21",
     "packages": [
         {
             "name": "baseapi/baseapi",
-            "version": "dev-main",
+            "version": "v0.3.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TimAnthonyAlexander/base-api.git",
@@ -28,7 +28,6 @@
                 "phpstan/phpstan": "^1.12",
                 "phpunit/phpunit": "^11.0"
             },
-            "default-branch": true,
             "bin": [
                 "bin/console"
             ],
@@ -2359,9 +2358,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "baseapi/baseapi": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
