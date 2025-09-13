@@ -1,1 +1,0 @@
-<?php echo 'clean code';
