@@ -28,6 +28,58 @@ You can change host and port in the .env file.
 php bin/console
 ```
 
+## Dependency Injection Example
+
+This template demonstrates BaseAPI's dependency injection system:
+
+### EmailService Example
+
+The `SignupController` shows how to inject services:
+
+```php
+class SignupController extends Controller
+{
+    private EmailService $emailService;
+
+    public function __construct(EmailService $emailService)
+    {
+        $this->emailService = $emailService;
+    }
+
+    public function post(): JsonResponse
+    {
+        // ... user creation logic ...
+        
+        // Use injected service
+        $this->emailService->sendWelcome($user->email, $user->name);
+        
+        return JsonResponse::ok($user->jsonSerialize());
+    }
+}
+```
+
+### Service Provider
+
+Services are registered in `app/Providers/AppServiceProvider.php`:
+
+```php
+public function register(ContainerInterface $container): void
+{
+    $container->singleton(EmailService::class);
+    $container->singleton(UserProvider::class, SimpleUserProvider::class);
+}
+```
+
+### Configuration
+
+Providers are registered in `config/app.php`:
+
+```php
+'providers' => [
+    \App\Providers\AppServiceProvider::class,
+],
+```
+
 ## Documentation
 
 For full framework documentation, features, and usage examples, see:

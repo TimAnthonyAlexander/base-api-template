@@ -12,6 +12,10 @@ return [
         'port' => $_ENV['APP_PORT'] ?? 7879,
     ],
 
+    'providers' => [
+        \App\Providers\AppServiceProvider::class,
+    ],
+
     'cors' => [
         'allowlist' => explode(',', $_ENV['CORS_ALLOWLIST'] ?? 'http://127.0.0.1:5173,http://localhost:5173'),
     ],

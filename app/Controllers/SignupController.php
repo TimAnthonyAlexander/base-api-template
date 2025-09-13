@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\User;
+use App\Services\EmailService;
 use BaseApi\Controllers\Controller;
 use BaseApi\Http\JsonResponse;
 use BaseApi\Http\Attributes\ResponseType;
@@ -18,6 +19,13 @@ class SignupController extends Controller
     public string $name = '';
     public string $email = '';
     public string $password = '';
+
+    private EmailService $emailService;
+
+    public function __construct(EmailService $emailService)
+    {
+        $this->emailService = $emailService;
+    }
 
     #[ResponseType(['user' => 'array'])]
     public function post(): JsonResponse
@@ -44,6 +52,9 @@ class SignupController extends Controller
         if (!$user->save()) {
             return JsonResponse::error('Failed to create user', 500);
         }
+
+        // Send welcome email using injected service
+        $this->emailService->sendWelcome($user->email, $user->name);
 
         // Log the user in automatically
         $_SESSION['user_id'] = $user->id ?? null;
