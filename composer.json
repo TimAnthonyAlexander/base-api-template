@@ -40,7 +40,11 @@
         "post-create-project-cmd": [
             "@php -r \"copy('.env.example', '.env');\"",
             "@php -r \"if (!is_dir('storage')) mkdir('storage', 0755, true);\"",
-            "@php -r \"if (!is_dir('storage/ratelimits')) mkdir('storage/ratelimits', 0755, true);\""
+            "@php -r \"if (!is_dir('storage/ratelimits')) mkdir('storage/ratelimits', 0755, true);\"",
+            "@setup-hooks"
+        ],
+        "setup-hooks": [
+            "bash .githooks/setup.sh"
         ],
         "test": "phpunit"
     },
