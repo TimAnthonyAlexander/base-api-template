@@ -28,6 +28,32 @@ You can change host and port in the .env file.
 php bin/console
 ```
 
+## Git Hooks
+
+This template includes pre-commit hooks that automatically check code quality:
+
+- **PHP Syntax Check** - Validates all staged PHP files
+- **PHPStan Analysis** - Static code analysis (if available)
+- **Tests** - Runs PHPUnit tests when core files change
+- **Code Quality** - Prevents debugging functions in commits
+- **File Size Warnings** - Alerts for large files
+
+### Setup
+
+Hooks are automatically installed when creating a new project. To reinstall manually:
+
+```bash
+composer setup-hooks
+```
+
+### Bypass Hook (Not Recommended)
+
+```bash
+git commit --no-verify -m "Skip pre-commit checks"
+```
+
+See `.githooks/README.md` for detailed documentation.
+
 ## Dependency Injection Example
 
 This template demonstrates BaseAPI's dependency injection system:
