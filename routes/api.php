@@ -8,6 +8,7 @@ use App\Controllers\MeController;
 use App\Controllers\SignupController;
 use BaseApi\Http\Middleware\RateLimitMiddleware;
 use BaseApi\Http\Middleware\AuthMiddleware;
+use BaseApi\Http\Middleware\CsrfMiddleware;
 
 $router = App::router();
 
@@ -55,6 +56,7 @@ $router->get(
     '/me',
     [
         AuthMiddleware::class,
+        CsrfMiddleware::class,
         MeController::class,
     ],
 );
