@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "79a3f2ce9185438e57443083a43d0cb0",
+    "content-hash": "7588aa67dfd97824ff1a09f08d3a9729",
     "packages": [
         {
             "name": "baseapi/baseapi",
-            "version": "v0.3.18",
+            "version": "v0.3.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TimAnthonyAlexander/base-api.git",
-                "reference": "668adebe7be4ab636e2b89ef50f5f936efee040d"
+                "reference": "33f484e80d4fb6a5e7eace52b32ff92862812bd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TimAnthonyAlexander/base-api/zipball/668adebe7be4ab636e2b89ef50f5f936efee040d",
-                "reference": "668adebe7be4ab636e2b89ef50f5f936efee040d",
+                "url": "https://api.github.com/repos/TimAnthonyAlexander/base-api/zipball/33f484e80d4fb6a5e7eace52b32ff92862812bd9",
+                "reference": "33f484e80d4fb6a5e7eace52b32ff92862812bd9",
                 "shasum": ""
             },
             "require": {
@@ -62,9 +62,9 @@
             ],
             "support": {
                 "issues": "https://github.com/TimAnthonyAlexander/base-api/issues",
-                "source": "https://github.com/TimAnthonyAlexander/base-api/tree/v0.3.18"
+                "source": "https://github.com/TimAnthonyAlexander/base-api/tree/v0.3.20"
             },
-            "time": "2025-09-13T23:23:48+00:00"
+            "time": "2025-09-13T23:48:25+00:00"
         },
         {
             "name": "graham-campbell/result-type",
