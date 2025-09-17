@@ -10,11 +10,30 @@ export interface ErrorResponse {
   errors?: Record<string, string>;
 }
 
+export interface GetHealthRequestQuery {
+  db?: string;
+}
+
 export type GetHealthResponse = Envelope<any>;
+
+export interface PostHealthRequestBody {
+  db?: string;
+}
 
 export type PostHealthResponse = Envelope<any>;
 
+export interface PostSignupRequestBody {
+  name?: string;
+  email?: string;
+  password?: string;
+}
+
 export type PostSignupResponse = Envelope<{ user: any[] }>;
+
+export interface PostLoginRequestBody {
+  email?: string;
+  password?: string;
+}
 
 export type PostLoginResponse = Envelope<{ user: any[] }>;
 
