@@ -7,15 +7,22 @@ use BaseApi\Http\JsonResponse;
 use BaseApi\App;
 use BaseApi\Database\DbException;
 use BaseApi\Database\Drivers\SqliteDriver;
+use BaseApi\Cache\Cache;
 
 class HealthController extends Controller
 {
     public string $db = '';
+    public string $cache = '';
 
     public function get(): JsonResponse
     {
 
         $response = ['ok' => true];
+
+        // Check if cache info is requested
+        if ($this->cache === '1') {
+            $response['cache'] = $this->getCacheInfo();
+        }
 
         // Check if database check is requested
         if ($this->db === '1') {
@@ -43,6 +50,33 @@ class HealthController extends Controller
         $jsonResponse = JsonResponse::ok($response);
 
         return $jsonResponse;
+    }
+
+    /**
+     * Simple cache check
+     * 
+     * @return array<string, mixed>
+     */
+    private function getCacheInfo(): array
+    {
+        try {
+            $testKey = 'health_check_' . time();
+            $testValue = 'cache_working';
+            
+            $putSuccess = Cache::put($testKey, $testValue, 60);
+            $getValue = Cache::get($testKey);
+            $forgetSuccess = Cache::forget($testKey);
+            
+            return [
+                'working' => $putSuccess && $getValue === $testValue && $forgetSuccess,
+                'driver' => Cache::manager()->getDefaultDriver()
+            ];
+        } catch (\Exception $e) {
+            return [
+                'working' => false, 
+                'error' => $e->getMessage()
+            ];
+        }
     }
 
     public function post(): JsonResponse
