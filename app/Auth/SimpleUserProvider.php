@@ -15,6 +15,8 @@ class SimpleUserProvider implements UserProvider
 {
     /**
      * Resolve user by ID from database or return stub.
+     *
+     * @return array<string, mixed>|null
      */
     public function byId(string $id): ?array
     {

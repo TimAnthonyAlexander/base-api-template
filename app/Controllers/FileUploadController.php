@@ -16,11 +16,10 @@ use BaseApi\Storage\Storage;
 #[Tag('Files')]
 class FileUploadController extends Controller
 {
-    #[Required]
     #[File]
     #[Mimes(['jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx'])]
     #[Size(5)] // 5MB max
-    public UploadedFile $file;
+    public ?UploadedFile $file = null;
 
     #[ResponseType([
         'path' => 'string',
@@ -30,10 +29,25 @@ class FileUploadController extends Controller
     ])]
     public function post(): JsonResponse
     {
-        // Validate the uploaded file
-        $this->validate($this);
-
-        // Store the file with auto-generated name
+        // Handle different POST endpoints based on path
+        $path = $this->request->path;
+        
+        return match ($path) {
+            '/files/upload' => $this->handleUpload(),
+            '/files/upload-public' => $this->uploadPublic(),
+            '/files/upload-custom' => $this->uploadWithCustomName(),
+            default => JsonResponse::notFound('Endpoint not found')
+        };
+    }
+    
+    private function handleUpload(): JsonResponse
+    {
+        // Validate that file is present
+        if (!$this->file) {
+            return JsonResponse::badRequest('File is required');
+        }
+        
+        // Store the file with auto-generated name (validation handled automatically via attributes)
         $path = $this->file->store('uploads');
 
         // Get the public URL for the file
@@ -51,12 +65,14 @@ class FileUploadController extends Controller
     /**
      * Upload a file to public storage (accessible via web).
      */
-    public function uploadPublic(): JsonResponse
+    private function uploadPublic(): JsonResponse
     {
-        // Validate the uploaded file
-        $this->validate($this);
-
-        // Store the file in public storage
+        // Validate that file is present
+        if (!$this->file) {
+            return JsonResponse::badRequest('File is required');
+        }
+        
+        // Store the file in public storage (validation handled automatically via attributes)
         $path = $this->file->storePublicly('public/uploads');
 
         // Get the public URL for the file
@@ -74,12 +90,14 @@ class FileUploadController extends Controller
     /**
      * Upload a file with a custom name.
      */
-    public function uploadWithCustomName(): JsonResponse
+    private function uploadWithCustomName(): JsonResponse
     {
-        // Validate the uploaded file
-        $this->validate($this);
-
-        // Generate a custom filename
+        // Validate that file is present
+        if (!$this->file) {
+            return JsonResponse::badRequest('File is required');
+        }
+        
+        // Generate a custom filename (validation handled automatically via attributes)
         $extension = $this->file->getExtension();
         $customName = 'custom_' . date('Y_m_d_H_i_s') . '.' . $extension;
 
@@ -99,10 +117,21 @@ class FileUploadController extends Controller
         ]);
     }
 
+    public function get(): JsonResponse
+    {
+        // Handle different GET endpoints based on path
+        $path = $this->request->path;
+        
+        return match ($path) {
+            '/files/info' => $this->getFileInfo(),
+            default => JsonResponse::notFound('Endpoint not found')
+        };
+    }
+
     /**
      * Get information about a stored file.
      */
-    public function getFileInfo(): JsonResponse
+    private function getFileInfo(): JsonResponse
     {
         $path = $this->request->query['path'] ?? '';
 
@@ -118,10 +147,15 @@ class FileUploadController extends Controller
         ]);
     }
 
+    public function delete(): JsonResponse
+    {
+        return $this->deleteFile();
+    }
+
     /**
      * Delete a stored file.
      */
-    public function deleteFile(): JsonResponse
+    private function deleteFile(): JsonResponse
     {
         $path = $this->request->body['path'] ?? '';
 

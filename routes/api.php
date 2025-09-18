@@ -71,11 +71,16 @@ $router->post(
     ],
 );
 
+// Note: BaseAPI uses HTTP method-based routing
+// Each controller method corresponds to an HTTP verb (post, get, delete, etc.)
+// For multiple POST endpoints with different behavior, we need different paths
+// and the controller will handle routing internally based on the path
+
 $router->post(
     '/files/upload-public',
     [
         RateLimitMiddleware::class => ['limit' => '10/1m'],
-        [FileUploadController::class, 'uploadPublic'],
+        FileUploadController::class,
     ],
 );
 
@@ -83,20 +88,20 @@ $router->post(
     '/files/upload-custom',
     [
         RateLimitMiddleware::class => ['limit' => '10/1m'],
-        [FileUploadController::class, 'uploadWithCustomName'],
+        FileUploadController::class,
     ],
 );
 
 $router->get(
     '/files/info',
     [
-        [FileUploadController::class, 'getFileInfo'],
+        FileUploadController::class,
     ],
 );
 
 $router->delete(
     '/files',
     [
-        [FileUploadController::class, 'deleteFile'],
+        FileUploadController::class,
     ],
 );

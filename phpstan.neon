@@ -1,0 +1,16 @@
+parameters:
+    level: 7
+    paths:
+        - app
+    ignoreErrors:
+        # Add any specific ignores here if needed
+        
+    # Ensure we have proper bootstrapping
+    bootstrapFiles:
+        - vendor/autoload.php
+    
+    # Memory limit for analysis
+    memoryLimitFile: .phpstan-memory-limit
+    
+    # Additional configurations
+    reportUnmatchedIgnoredErrors: false
