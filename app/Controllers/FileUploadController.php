@@ -138,3 +138,4 @@ class FileUploadController extends Controller
         return JsonResponse::error('Failed to delete file');
     }
 }
+

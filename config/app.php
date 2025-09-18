@@ -29,4 +29,21 @@ return [
         'charset' => 'utf8mb4',
         'persistent' => false,
     ],
+
+    'filesystems' => [
+        'default' => $_ENV['FILESYSTEM_DISK'] ?? 'local',
+        'disks' => [
+            'local' => [
+                'driver' => 'local',
+                'root' => 'storage/app',
+                'url' => ($_ENV['APP_URL'] ?? 'http://localhost:7879') . '/storage',
+            ],
+            'public' => [
+                'driver' => 'local',
+                'root' => 'storage/app/public',
+                'url' => ($_ENV['APP_URL'] ?? 'http://localhost:7879') . '/storage',
+                'visibility' => 'public',
+            ],
+        ],
+    ],
 ];
