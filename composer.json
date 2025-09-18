@@ -36,6 +36,7 @@
     },
     "scripts": {
         "serve": "php bin/console serve",
+        "serve-screen": "screen -dmS baseapi php bin/console serve",
         "phpstan": "phpstan analyse --memory-limit=256M",
         "post-create-project-cmd": [
             "@php -r \"copy('.env.example', '.env');\"",
