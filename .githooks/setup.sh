@@ -93,3 +93,4 @@ print_status "The pre-commit hook will now run automatically before each commit.
 print_status "To bypass the hook temporarily, use: git commit --no-verify"
 
 exit 0
+

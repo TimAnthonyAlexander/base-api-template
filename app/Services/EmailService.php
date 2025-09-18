@@ -64,3 +64,4 @@ class EmailService
         return $this->send($email, $subject, $body);
     }
 }
+

@@ -110,3 +110,4 @@ composer require --dev phpunit/phpunit
 ### Hook is too strict
 
 You can modify the `.githooks/pre-commit` file to adjust the checks according to your needs, then run the setup script again.
+

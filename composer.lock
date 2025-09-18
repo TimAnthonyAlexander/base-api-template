@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1262dee8a1546f80eaed686f11a7902c",
+    "content-hash": "8a5b23e5d51d94de7dcad771184bf4ca",
     "packages": [
         {
             "name": "baseapi/baseapi",
-            "version": "v0.3.23",
+            "version": "v0.3.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TimAnthonyAlexander/base-api.git",
-                "reference": "6c99537cef2917b48ca0b4709d2d165123ab0a3c"
+                "reference": "5d229c32119f13e74b1e8923a14aac4cb91042fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TimAnthonyAlexander/base-api/zipball/6c99537cef2917b48ca0b4709d2d165123ab0a3c",
-                "reference": "6c99537cef2917b48ca0b4709d2d165123ab0a3c",
+                "url": "https://api.github.com/repos/TimAnthonyAlexander/base-api/zipball/5d229c32119f13e74b1e8923a14aac4cb91042fc",
+                "reference": "5d229c32119f13e74b1e8923a14aac4cb91042fc",
                 "shasum": ""
             },
             "require": {
@@ -38,6 +38,9 @@
                 }
             },
             "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
                 "psr-4": {
                     "BaseApi\\": "src/"
                 }
@@ -62,9 +65,9 @@
             ],
             "support": {
                 "issues": "https://github.com/TimAnthonyAlexander/base-api/issues",
-                "source": "https://github.com/TimAnthonyAlexander/base-api/tree/v0.3.23"
+                "source": "https://github.com/TimAnthonyAlexander/base-api/tree/v0.3.25"
             },
-            "time": "2025-09-18T16:28:32+00:00"
+            "time": "2025-09-18T19:15:30+00:00"
         },
         {
             "name": "graham-campbell/result-type",

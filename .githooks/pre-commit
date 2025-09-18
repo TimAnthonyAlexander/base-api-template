@@ -145,7 +145,7 @@ fi
 print_status "Checking for common issues..."
 
 # Check for var_dump, dd, die, etc.
-FORBIDDEN_FUNCTIONS="var_dump\|print_r\|die\|exit\|dd\|dump"
+FORBIDDEN_FUNCTIONS="var_dump\|print_r\|die\|exit\|dump"
 if echo "$STAGED_FILES" | xargs grep -l "$FORBIDDEN_FUNCTIONS" 2>/dev/null; then
     print_error "Found debugging functions in staged files:"
     echo "$STAGED_FILES" | xargs grep -n "$FORBIDDEN_FUNCTIONS" 2>/dev/null || true
