@@ -7,11 +7,15 @@ use App\Controllers\LogoutController;
 use App\Controllers\MeController;
 use App\Controllers\SignupController;
 use App\Controllers\FileUploadController;
+use App\Controllers\BenchmarkController;
 use BaseApi\Http\Middleware\RateLimitMiddleware;
 use BaseApi\Http\Middleware\AuthMiddleware;
 use BaseApi\Http\Middleware\CsrfMiddleware;
 
 $router = App::router();
+
+// Benchmark endpoint (no middleware for performance testing)
+$router->get('/benchmark', [BenchmarkController::class]);
 
 // Health check endpoints
 $router->get(
