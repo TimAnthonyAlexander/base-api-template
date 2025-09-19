@@ -8,9 +8,11 @@ use App\Controllers\MeController;
 use App\Controllers\SignupController;
 use App\Controllers\FileUploadController;
 use App\Controllers\BenchmarkController;
+use App\Controllers\DebugExampleController;
 use BaseApi\Http\Middleware\RateLimitMiddleware;
 use BaseApi\Http\Middleware\AuthMiddleware;
 use BaseApi\Http\Middleware\CsrfMiddleware;
+use BaseApi\Http\DebugMiddleware;
 
 $router = App::router();
 
@@ -109,3 +111,28 @@ $router->delete(
         FileUploadController::class,
     ],
 );
+
+// Debug example endpoints (only available in development)
+// These demonstrate the debugging features of BaseAPI
+if (App::config('app.env') === 'local') {
+    $router->get('/debug/query', [
+        DebugMiddleware::class,
+        DebugExampleController::class,
+    ]);
+    $router->get('/debug/profiling', [
+        DebugMiddleware::class,
+        DebugExampleController::class,
+    ]);
+    $router->get('/debug/exception', [
+        DebugMiddleware::class,
+        DebugExampleController::class,
+    ]);
+    $router->get('/debug/slow-query', [
+        DebugMiddleware::class,
+        DebugExampleController::class,
+    ]);
+    $router->get('/debug/info', [
+        DebugMiddleware::class,
+        DebugExampleController::class,
+    ]);
+}
