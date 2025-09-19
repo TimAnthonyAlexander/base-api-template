@@ -117,20 +117,31 @@ class DebugExampleController extends Controller
         // Another query for demonstration
         $activeUserCount = User::where('active', '=', true)->count();
         
-        // Simulate a slow query with sleep
-        App::profiler()->profile('simulated_slow_query', function() {
-            usleep(150000); // 150ms - should trigger slow query warning
+        // Simulate a slow database query by adding a sleep in a real query
+        // This will show up as a slow query in the profiler
+        $slowQuery = App::profiler()->profile('slow_database_operation', function() {
+            // Simulate slow query with SLEEP (works on MySQL) or delay logic
+            try {
+                return App::db()->raw("SELECT ?, SLEEP(0.15) as slow_operation", [1]);
+            } catch (\Exception $e) {
+                // Fallback for databases that don't support SLEEP
+                usleep(150000); // 150ms
+                return App::db()->raw("SELECT ? as slow_operation", [1]);
+            }
         });
         
-        // Get some recent users (this will be another query)
-        $recentUsers = User::where('id', '>', 0)->limit(3)->get();
+        // Additional queries to increase query count
+        $testQuery1 = User::where('active', '=', true)->limit(1)->get();
+        $testQuery2 = User::where('active', '=', false)->limit(1)->get();
+        $testQuery3 = User::where('id', '>', 0)->limit(5)->get();
         
         return JsonResponse::ok([
             'message' => 'Slow query example completed',
             'total_users' => $userCount,
             'active_users' => $activeUserCount,
-            'recent_users_count' => count($recentUsers),
-            'note' => 'This should trigger slow query warnings in debug output'
+            'test_queries_executed' => 3,
+            'slow_query_result' => !empty($slowQuery),
+            'note' => 'This should show multiple queries and slow query detection'
         ]);
     }
 
