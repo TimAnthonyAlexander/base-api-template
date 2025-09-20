@@ -1,72 +1,23 @@
 {
-    "generated_at": "2025-09-11T19:20:32+00:00",
-    "plan": [
+    "version": "1.0",
+    "migrations": [
         {
-            "op": "create_table",
+            "id": "mig_cfaaa6f3d658",
+            "sql": "CREATE TABLE \"users\" (\n  \"name\" TEXT NOT NULL,\n  \"password\" TEXT NOT NULL,\n  \"email\" TEXT NOT NULL,\n  \"active\" INTEGER NOT NULL,\n  \"id\" TEXT PRIMARY KEY NOT NULL,\n  \"created_at\" DATETIME DEFAULT CURRENT_TIMESTAMP,\n  \"updated_at\" DATETIME DEFAULT CURRENT_TIMESTAMP\n)",
+            "destructive": false,
+            "generated_at": "2025-09-20T14:59:31+00:00",
             "table": "users",
-            "columns": {
-                "name": {
-                    "name": "name",
-                    "type": "TEXT",
-                    "nullable": false,
-                    "default": null,
-                    "is_pk": false
-                },
-                "password": {
-                    "name": "password",
-                    "type": "TEXT",
-                    "nullable": false,
-                    "default": null,
-                    "is_pk": false
-                },
-                "email": {
-                    "name": "email",
-                    "type": "TEXT",
-                    "nullable": false,
-                    "default": null,
-                    "is_pk": false
-                },
-                "active": {
-                    "name": "active",
-                    "type": "INTEGER",
-                    "nullable": false,
-                    "default": null,
-                    "is_pk": false
-                },
-                "id": {
-                    "name": "id",
-                    "type": "TEXT",
-                    "nullable": false,
-                    "default": null,
-                    "is_pk": true
-                },
-                "created_at": {
-                    "name": "created_at",
-                    "type": "DATETIME",
-                    "nullable": true,
-                    "default": "CURRENT_TIMESTAMP",
-                    "is_pk": false
-                },
-                "updated_at": {
-                    "name": "updated_at",
-                    "type": "DATETIME",
-                    "nullable": true,
-                    "default": "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP",
-                    "is_pk": false
-                }
-            },
-            "destructive": false
+            "operation": "create_table",
+            "warning": null
         },
         {
-            "op": "add_index",
+            "id": "mig_b8de6c8bab5c",
+            "sql": "CREATE UNIQUE INDEX \"uniq_users_email\" ON \"users\" (\"email\")",
+            "destructive": false,
+            "generated_at": "2025-09-20T14:59:31+00:00",
             "table": "users",
-            "index": {
-                "name": "uniq_users_email",
-                "column": "email",
-                "type": "unique"
-            },
-            "destructive": false
+            "operation": "add_index",
+            "warning": null
         }
-    ],
-    "applied_at": "2025-09-11T19:20:36+00:00"
+    ]
 }
