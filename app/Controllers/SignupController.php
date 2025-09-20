@@ -27,13 +27,21 @@ class SignupController extends Controller
         $this->emailService = $emailService;
     }
 
-    #[ResponseType(['user' => 'array'])]
+    // Option 1: Specify the User class directly
+    #[ResponseType(User::class)]
+    // Option 2: Auto-infer from return statements (NEW!)
+    // #[ResponseType]
     public function post(): JsonResponse
     {
         $this->validate([
             'name' => 'required|string',
             'email' => 'required|string|email',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string|min:8',
+        ], [
+            'name.required' => 'Name is required',
+            'email.required' => 'Email is required',
+            'password.required' => 'Password is required',
+            'password.min' => 'Password must be at least 8 characters',
         ]);
 
         // Check if user already exists
