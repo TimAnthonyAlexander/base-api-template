@@ -27,10 +27,7 @@ class SignupController extends Controller
         $this->emailService = $emailService;
     }
 
-    // Option 1: Specify the User class directly
     #[ResponseType(User::class)]
-    // Option 2: Auto-infer from return statements (NEW!)
-    // #[ResponseType]
     public function post(): JsonResponse
     {
         $this->validate([
