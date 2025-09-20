@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bbce27a5a2521694895a99bc2ec64f7d",
+    "content-hash": "8073aa605ee4f4391877d0aa49697b81",
     "packages": [
         {
             "name": "baseapi/baseapi",
-            "version": "dev-feature/migration-rework",
+            "version": "v0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TimAnthonyAlexander/base-api.git",
-                "reference": "e8f25eae42098afd6128f07293120755cf0b4dec"
+                "reference": "6d589e5789c6770e1de42eea89af5637295bfada"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TimAnthonyAlexander/base-api/zipball/e8f25eae42098afd6128f07293120755cf0b4dec",
-                "reference": "e8f25eae42098afd6128f07293120755cf0b4dec",
+                "url": "https://api.github.com/repos/TimAnthonyAlexander/base-api/zipball/6d589e5789c6770e1de42eea89af5637295bfada",
+                "reference": "6d589e5789c6770e1de42eea89af5637295bfada",
                 "shasum": ""
             },
             "require": {
@@ -65,9 +65,9 @@
             ],
             "support": {
                 "issues": "https://github.com/TimAnthonyAlexander/base-api/issues",
-                "source": "https://github.com/TimAnthonyAlexander/base-api/tree/feature/migration-rework"
+                "source": "https://github.com/TimAnthonyAlexander/base-api/tree/v0.4.0"
             },
-            "time": "2025-09-20T14:58:31+00:00"
+            "time": "2025-09-20T15:38:23+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -2361,9 +2361,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "baseapi/baseapi": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
