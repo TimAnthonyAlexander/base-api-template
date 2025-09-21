@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8073aa605ee4f4391877d0aa49697b81",
+    "content-hash": "d50a44e86e6c0853f85059de11560d03",
     "packages": [
         {
             "name": "baseapi/baseapi",
-            "version": "v0.4.0",
+            "version": "v0.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TimAnthonyAlexander/base-api.git",
-                "reference": "6d589e5789c6770e1de42eea89af5637295bfada"
+                "reference": "78f3499af77803a88bfa41b5c2381472bc001afc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TimAnthonyAlexander/base-api/zipball/6d589e5789c6770e1de42eea89af5637295bfada",
-                "reference": "6d589e5789c6770e1de42eea89af5637295bfada",
+                "url": "https://api.github.com/repos/TimAnthonyAlexander/base-api/zipball/78f3499af77803a88bfa41b5c2381472bc001afc",
+                "reference": "78f3499af77803a88bfa41b5c2381472bc001afc",
                 "shasum": ""
             },
             "require": {
@@ -25,6 +25,7 @@
                 "vlucas/phpdotenv": "^5.6"
             },
             "require-dev": {
+                "ergebnis/phpunit-slow-test-detector": "^2.20",
                 "phpstan/phpstan": "^1.12",
                 "phpunit/phpunit": "^11.0"
             },
@@ -65,9 +66,9 @@
             ],
             "support": {
                 "issues": "https://github.com/TimAnthonyAlexander/base-api/issues",
-                "source": "https://github.com/TimAnthonyAlexander/base-api/tree/v0.4.0"
+                "source": "https://github.com/TimAnthonyAlexander/base-api/tree/v0.4.2"
             },
-            "time": "2025-09-20T15:38:23+00:00"
+            "time": "2025-09-21T10:07:07+00:00"
         },
         {
             "name": "graham-campbell/result-type",
