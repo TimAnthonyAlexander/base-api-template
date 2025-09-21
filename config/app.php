@@ -174,26 +174,7 @@ return [
         // Required for file and Redis stores to handle objects/arrays
         'serialize' => true,
         
-        /*
-        | Model Query Cache
-        |
-        | Automatic caching of database query results to improve performance.
-        | Queries are automatically tagged with model names for selective invalidation.
-        */
-        'query_cache' => [
-            // Enable automatic query result caching
-            // Framework default: false, template default: true
-            'enabled' => $_ENV['CACHE_QUERIES'] ?? true,
-            
-            // Default TTL for cached query results (5 minutes)
-            'default_ttl' => (int)($_ENV['CACHE_QUERY_TTL'] ?? 300),
-            
-            // Cache key prefix for query results
-            'prefix' => 'query',
-            
-            // Tag prefix for model-based cache invalidation
-            'tag_prefix' => 'model',
-        ],
+        // Note: Model query caching is planned but not yet implemented
         
         /*
         | HTTP Response Cache
@@ -270,73 +251,13 @@ return [
     |--------------------------------------------------------------------------
     |
     | Background job queue configuration for asynchronous task processing.
-    | Supports multiple drivers including sync (immediate), database (persistent),
-    | and Redis (high performance). See baseapi/config/queue.php for full
-    | configuration options and driver settings.
+    | Worker settings are configured via command-line options when running workers.
+    | Only the driver needs to be configured here.
     |
     */
     'queue' => [
-        // Default queue driver: 'sync', 'database', 'redis'
+        // Default queue driver: 'sync' (development), 'database' (production)
         // Framework default: 'sync' (executes immediately)
-        'default' => $_ENV['QUEUE_DRIVER'] ?? 'database',
-        
-        /*
-        | Queue Driver Configuration
-        |
-        | Override specific driver settings from framework defaults.
-        | Each driver can have multiple named connections.
-        */
-        'drivers' => [
-            // Synchronous driver - executes jobs immediately (good for development)
-            'sync' => [
-                'driver' => 'sync',
-            ],
-            
-            // Database driver - stores jobs in database table (recommended for production)
-            'database' => [
-                'driver' => 'database',
-                'table' => 'jobs',
-                'connection' => $_ENV['QUEUE_DB_CONNECTION'] ?? 'default',
-            ],
-            
-            // Redis driver - high performance queue (requires Redis server)
-            'redis' => [
-                'driver' => 'redis',
-                'connection' => 'queue',
-                'prefix' => $_ENV['QUEUE_REDIS_PREFIX'] ?? 'baseapi_queue:',
-            ],
-        ],
-        
-        /*
-        | Worker Configuration
-        |
-        | Default settings for queue workers processing background jobs.
-        */
-        'worker' => [
-            // Seconds to sleep when no jobs are available
-            'sleep' => (int)($_ENV['QUEUE_WORKER_SLEEP'] ?? 3),
-            
-            // Maximum jobs to process before restarting worker
-            'max_jobs' => (int)($_ENV['QUEUE_WORKER_MAX_JOBS'] ?? 1000),
-            
-            // Maximum time in seconds before restarting worker
-            'max_time' => (int)($_ENV['QUEUE_WORKER_MAX_TIME'] ?? 3600),
-            
-            // Memory limit in MB before restarting worker
-            'memory_limit' => (int)($_ENV['QUEUE_WORKER_MEMORY'] ?? 128),
-        ],
-        
-        /*
-        | Failed Job Configuration
-        |
-        | Settings for handling permanently failed jobs.
-        */
-        'failed' => [
-            // Days to retain failed jobs before cleanup
-            'retention_days' => (int)($_ENV['QUEUE_FAILED_RETENTION'] ?? 30),
-            
-            // Enable automatic cleanup of old failed jobs
-            'cleanup_enabled' => $_ENV['QUEUE_FAILED_CLEANUP'] ?? true,
-        ],
+        'default' => $_ENV['QUEUE_DRIVER'] ?? 'sync',
     ],
 ];
