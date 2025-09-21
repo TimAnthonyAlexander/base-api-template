@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Auth;
 
+use Override;
 use App\Models\User;
 use BaseApi\Auth\UserProvider;
 use Exception;
@@ -18,6 +19,7 @@ class SimpleUserProvider implements UserProvider
      *
      * @return array<string, mixed>|null
      */
+    #[Override]
     public function byId(string $id): ?array
     {
         try {

@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use Exception;
 use BaseApi\Controllers\Controller;
 use BaseApi\Http\JsonResponse;
 use BaseApi\App;
@@ -12,6 +13,7 @@ use BaseApi\Cache\Cache;
 class HealthController extends Controller
 {
     public string $db = '';
+
     public string $cache = '';
 
     public function get(): JsonResponse
@@ -47,9 +49,7 @@ class HealthController extends Controller
             }
         }
 
-        $jsonResponse = JsonResponse::ok($response);
-
-        return $jsonResponse;
+        return JsonResponse::ok($response);
     }
 
     /**
@@ -62,19 +62,19 @@ class HealthController extends Controller
         try {
             $testKey = 'health_check_' . time();
             $testValue = 'cache_working';
-            
+
             $putSuccess = Cache::put($testKey, $testValue, 60);
             $getValue = Cache::get($testKey);
             $forgetSuccess = Cache::forget($testKey);
-            
+
             return [
                 'working' => $putSuccess && $getValue === $testValue && $forgetSuccess,
                 'driver' => Cache::manager()->getDefaultDriver()
             ];
-        } catch (\Exception $e) {
+        } catch (Exception $exception) {
             return [
                 'working' => false, 
-                'error' => $e->getMessage()
+                'error' => $exception->getMessage()
             ];
         }
     }
@@ -82,8 +82,6 @@ class HealthController extends Controller
     public function post(): JsonResponse
     {
 
-        $jsonResponse = JsonResponse::ok(['ok' => true, 'received' => 'data']);
-
-        return $jsonResponse;
+        return JsonResponse::ok(['ok' => true, 'received' => 'data']);
     }
 }

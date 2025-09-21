@@ -7,7 +7,6 @@ use BaseApi\Http\JsonResponse;
 use BaseApi\Http\UploadedFile;
 use BaseApi\Http\Attributes\ResponseType;
 use BaseApi\Http\Attributes\Tag;
-use BaseApi\Http\Validation\Attributes\Required;
 use BaseApi\Http\Validation\Attributes\File;
 use BaseApi\Http\Validation\Attributes\Mimes;
 use BaseApi\Http\Validation\Attributes\Size;
@@ -43,7 +42,7 @@ class FileUploadController extends Controller
     private function handleUpload(): JsonResponse
     {
         // Validate that file is present
-        if (!$this->file) {
+        if (!$this->file instanceof UploadedFile) {
             return JsonResponse::badRequest('File is required');
         }
         
@@ -68,7 +67,7 @@ class FileUploadController extends Controller
     private function uploadPublic(): JsonResponse
     {
         // Validate that file is present
-        if (!$this->file) {
+        if (!$this->file instanceof UploadedFile) {
             return JsonResponse::badRequest('File is required');
         }
         
@@ -93,7 +92,7 @@ class FileUploadController extends Controller
     private function uploadWithCustomName(): JsonResponse
     {
         // Validate that file is present
-        if (!$this->file) {
+        if (!$this->file instanceof UploadedFile) {
             return JsonResponse::badRequest('File is required');
         }
         

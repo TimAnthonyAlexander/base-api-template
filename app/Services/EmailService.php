@@ -14,8 +14,8 @@ use BaseApi\Config;
 class EmailService
 {
     public function __construct(
-        private Logger $logger,
-        private Config $config,
+        private readonly Logger $logger,
+        private readonly Config $config,
     ) {}
 
     /**
@@ -29,7 +29,7 @@ class EmailService
     public function send(string $to, string $subject, string $body): bool
     {
         // In a real implementation, this would send an actual email
-        $this->logger->info("Sending email to {$to}: {$subject}");
+        $this->logger->info(sprintf('Sending email to %s: %s', $to, $subject));
 
         // Mock success based on app environment
         $isProduction = $this->config->get('app.env') === 'production';
@@ -38,11 +38,11 @@ class EmailService
             // In production, actually send the email
             // return $this->actuallySemdEmail($to, $subject, $body);
             return true;
-        } else {
-            // In development, just log it
-            $this->logger->info("Email body: {$body}");
-            return true;
         }
+
+        // In development, just log it
+        $this->logger->info('Email body: ' . $body);
+        return true;
     }
 
     /**

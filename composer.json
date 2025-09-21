@@ -17,12 +17,13 @@
         }
     ],
     "require": {
-        "php": ">=8.4",
+        "php": "^8.4",
         "baseapi/baseapi": "dev-feature/queue"
     },
     "require-dev": {
+        "phpstan/phpstan": "^1.12",
         "phpunit/phpunit": "^11.0",
-        "phpstan/phpstan": "^1.12"
+        "rector/rector": "^1.2"
     },
     "autoload": {
         "psr-4": {
@@ -47,7 +48,10 @@
         "setup-hooks": [
             "bash .githooks/setup.sh"
         ],
-        "test": "phpunit"
+        "test": "phpunit",
+        "rector": "vendor/bin/rector process --dry-run",
+        "rector:fix": "vendor/bin/rector process",
+        "rector:ci": "vendor/bin/rector process --dry-run --no-progress --ansi"
     },
     "config": {
         "optimize-autoloader": true,

@@ -17,11 +17,13 @@ use BaseApi\Http\Attributes\Tag;
 class SignupController extends Controller
 {
     public string $name = '';
+
     public string $email = '';
+
     public string $password = '';
 
     public function __construct(
-        private EmailService $emailService,
+        private readonly EmailService $emailService,
     ) {}
 
     #[ResponseType(User::class)]
@@ -31,16 +33,11 @@ class SignupController extends Controller
             'name' => 'required|string',
             'email' => 'required|string|email',
             'password' => 'required|string|min:8',
-        ], [
-            'name.required' => 'Name is required',
-            'email.required' => 'Email is required',
-            'password.required' => 'Password is required',
-            'password.min' => 'Password must be at least 8 characters',
         ]);
 
         // Check if user already exists
         $existingUser = User::firstWhere('email', '=', $this->email);
-        if ($existingUser) {
+        if ($existingUser instanceof User) {
             return JsonResponse::error('User with this email already exists', 409);
         }
 

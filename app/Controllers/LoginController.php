@@ -16,6 +16,7 @@ use BaseApi\Http\Attributes\Tag;
 class LoginController extends Controller
 {
     public string $email = '';
+
     public string $password = '';
 
     #[ResponseType(['user' => 'array'])]

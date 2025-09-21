@@ -7,8 +7,11 @@ use BaseApi\Models\BaseModel;
 class User extends BaseModel
 {
     public string $name = '';
+
     public string $password = '';
+
     public string $email = '';
+
     public bool $active = true;
 
     /**

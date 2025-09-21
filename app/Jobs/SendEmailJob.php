@@ -2,6 +2,8 @@
 
 namespace App\Jobs;
 
+use Override;
+use Throwable;
 use BaseApi\Queue\Job;
 use App\Services\EmailService;
 use BaseApi\App;
@@ -10,15 +12,16 @@ use BaseApi\Logger;
 class SendEmailJob extends Job
 {
     protected int $maxRetries = 3;
+
     protected int $retryDelay = 30; // seconds
 
     public function __construct(
-        private string $to,
-        private string $subject,
-        private string $body,
-        private ?string $from = null
+        private readonly string $to,
+        private readonly string $subject,
+        private readonly string $body
     ) {}
 
+    #[Override]
     public function handle(): void
     {
         // Send email using email service
@@ -31,16 +34,17 @@ class SendEmailJob extends Job
         );
 
         // Log successful email
-        error_log("Email sent successfully to {$this->to}: {$this->subject}");
+        error_log(sprintf('Email sent successfully to %s: %s', $this->to, $this->subject));
     }
 
-    public function failed(\Throwable $exception): void
+    #[Override]
+    public function failed(Throwable $throwable): void
     {
         // Handle failed email job
-        error_log("Failed to send email to {$this->to}: " . $exception->getMessage());
+        error_log(sprintf('Failed to send email to %s: ', $this->to) . $throwable->getMessage());
 
         // Call parent to log the failure
-        parent::failed($exception);
+        parent::failed($throwable);
 
         // Could dispatch a notification job to admins about the failure
         // dispatch(new NotifyAdminsJob('Failed email', $exception->getMessage()));

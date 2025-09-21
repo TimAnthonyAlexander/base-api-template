@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use Exception;
+use RuntimeException;
 use BaseApi\Controllers\Controller;
 use BaseApi\Http\JsonResponse;
 use BaseApi\App;
@@ -60,7 +62,7 @@ class DebugExampleController extends Controller
     private function profilingExample(): JsonResponse
     {
         // Manual profiling of a specific operation
-        $result = App::profiler()->profile('expensive_operation', function () {
+        $result = App::profiler()->profile('expensive_operation', function (): array {
             // Simulate some work
             usleep(50000); // 50ms
 
@@ -90,9 +92,9 @@ class DebugExampleController extends Controller
         try {
             // This will throw an exception that gets tracked
             $this->simulateError();
-        } catch (\Exception $e) {
+        } catch (Exception $exception) {
             // Exceptions are automatically logged, but you can add context
-            App::profiler()->logException($e, [
+            App::profiler()->logException($exception, [
                 'controller' => 'DebugExampleController',
                 'action' => 'exceptionExample',
                 'user_input' => 'test_data'
@@ -117,11 +119,11 @@ class DebugExampleController extends Controller
 
         // Simulate a slow database query by adding a sleep in a real query
         // This will show up as a slow query in the profiler
-        $slowQuery = App::profiler()->profile('slow_database_operation', function () {
+        $slowQuery = App::profiler()->profile('slow_database_operation', function (): array {
             // Simulate slow query with SLEEP (works on MySQL) or delay logic
             try {
                 return App::db()->raw("SELECT ?, SLEEP(0.15) as slow_operation", [1]);
-            } catch (\Exception $e) {
+            } catch (Exception) {
                 // Fallback for databases that don't support SLEEP
                 usleep(150000); // 150ms
                 return App::db()->raw("SELECT ? as slow_operation", [1]);
@@ -129,9 +131,9 @@ class DebugExampleController extends Controller
         });
 
         // Additional queries to increase query count
-        $testQuery1 = User::where('active', '=', true)->limit(1)->get();
-        $testQuery2 = User::where('active', '=', false)->limit(1)->get();
-        $testQuery3 = User::where('id', '>', 0)->limit(5)->get();
+        User::where('active', '=', true)->limit(1)->get();
+        User::where('active', '=', false)->limit(1)->get();
+        User::where('id', '>', 0)->limit(5)->get();
 
         return JsonResponse::ok([
             'message' => 'Slow query example completed',
@@ -169,6 +171,6 @@ class DebugExampleController extends Controller
      */
     private function simulateError(): void
     {
-        throw new \RuntimeException('This is a simulated error for debugging demonstration');
+        throw new RuntimeException('This is a simulated error for debugging demonstration');
     }
 }
