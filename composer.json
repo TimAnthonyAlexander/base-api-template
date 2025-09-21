@@ -48,7 +48,7 @@
         "setup-hooks": [
             "bash .githooks/setup.sh"
         ],
-        "test": "phpunit",
+        "phpunit": "phpunit --colors=always tests/",
         "rector": "vendor/bin/rector process --dry-run",
         "rector:fix": "vendor/bin/rector process",
         "rector:ci": "vendor/bin/rector process --dry-run --no-progress --ansi"

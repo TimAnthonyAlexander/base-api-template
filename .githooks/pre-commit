@@ -124,7 +124,7 @@ if [ -f "vendor/bin/phpunit" ] && ([ $CORE_FILES_CHANGED -eq 1 ] || [ $TEST_FILE
     
     # Check if tests directory exists and has test files
     if [ -d "tests" ] && find tests -name "*.php" -type f | grep -q .; then
-        if ! composer test -- --no-coverage --stop-on-failure 2>/dev/null; then
+        if ! composer phpunit -- --no-coverage --stop-on-failure 2>/dev/null; then
             print_error "Tests failed"
             print_error "Fix failing tests before committing"
             exit 1
