@@ -16,7 +16,7 @@ Copy the environment example file and start the server
 
 ```bash
 cp .env.example .env
-php bin/console serve
+php mason serve
 ```
 
 Your API will be available at `http://localhost:7879`.
@@ -25,7 +25,7 @@ You can change host and port in the .env file.
 ### Console commands are run using:
 
 ```bash
-php bin/console
+php mason
 ```
 
 ## Git Hooks

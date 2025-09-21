@@ -1,0 +1,7 @@
+#!/usr/bin/env php
+<?php
+
+// BaseAPI Template Console Shim
+// This script forwards commands to the framework's console
+
+require __DIR__ . '/vendor/bin/mason';

@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4df76c6d025e988e5dfe61a31459bfc3",
+    "content-hash": "9cff507b5e9f57f8bc2af4a0834bfac1",
     "packages": [
         {
             "name": "baseapi/baseapi",
-            "version": "v0.4.6",
+            "version": "v0.4.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TimAnthonyAlexander/base-api.git",
-                "reference": "a57c04d1ce5ce964f7e267a78b4f4bdb041ccde0"
+                "reference": "bc1b6a8eaf41ecc94a264d0fd2758a0b3aad92fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TimAnthonyAlexander/base-api/zipball/a57c04d1ce5ce964f7e267a78b4f4bdb041ccde0",
-                "reference": "a57c04d1ce5ce964f7e267a78b4f4bdb041ccde0",
+                "url": "https://api.github.com/repos/TimAnthonyAlexander/base-api/zipball/bc1b6a8eaf41ecc94a264d0fd2758a0b3aad92fc",
+                "reference": "bc1b6a8eaf41ecc94a264d0fd2758a0b3aad92fc",
                 "shasum": ""
             },
             "require": {
@@ -31,7 +31,7 @@
                 "rector/rector": "^1.2"
             },
             "bin": [
-                "bin/console"
+                "mason"
             ],
             "type": "library",
             "extra": {
@@ -67,9 +67,9 @@
             ],
             "support": {
                 "issues": "https://github.com/TimAnthonyAlexander/base-api/issues",
-                "source": "https://github.com/TimAnthonyAlexander/base-api/tree/v0.4.6"
+                "source": "https://github.com/TimAnthonyAlexander/base-api/tree/v0.4.7"
             },
-            "time": "2025-09-21T18:06:40+00:00"
+            "time": "2025-09-21T19:28:58+00:00"
         },
         {
             "name": "graham-campbell/result-type",

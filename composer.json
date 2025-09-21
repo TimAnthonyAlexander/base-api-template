@@ -18,7 +18,7 @@
     ],
     "require": {
         "php": "^8.4",
-        "baseapi/baseapi": "v0.4.6"
+        "baseapi/baseapi": "v0.4.7"
     },
     "require-dev": {
         "phpstan/phpstan": "^1.12",
@@ -36,8 +36,8 @@
         }
     },
     "scripts": {
-        "serve": "php bin/console serve",
-        "serve-screen": "screen -dmS baseapi php bin/console serve",
+        "serve": "php mason serve",
+        "serve-screen": "screen -dmS baseapi php mason serve",
         "phpstan": "phpstan analyse --memory-limit=256M",
         "post-create-project-cmd": [
             "@php -r \"copy('.env.example', '.env');\"",
