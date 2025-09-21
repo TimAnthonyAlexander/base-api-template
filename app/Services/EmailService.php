@@ -13,14 +13,10 @@ use BaseApi\Config;
  */
 class EmailService
 {
-    private Logger $logger;
-    private Config $config;
-
-    public function __construct(Logger $logger, Config $config)
-    {
-        $this->logger = $logger;
-        $this->config = $config;
-    }
+    public function __construct(
+        private Logger $logger,
+        private Config $config,
+    ) {}
 
     /**
      * Send an email (mock implementation).
@@ -34,10 +30,10 @@ class EmailService
     {
         // In a real implementation, this would send an actual email
         $this->logger->info("Sending email to {$to}: {$subject}");
-        
+
         // Mock success based on app environment
         $isProduction = $this->config->get('app.env') === 'production';
-        
+
         if ($isProduction) {
             // In production, actually send the email
             // return $this->actuallySemdEmail($to, $subject, $body);
@@ -60,8 +56,7 @@ class EmailService
     {
         $subject = "Welcome to " . $this->config->get('app.name', 'BaseAPI');
         $body = "Hello {$name},\n\nWelcome to our application!";
-        
+
         return $this->send($email, $subject, $body);
     }
 }
-

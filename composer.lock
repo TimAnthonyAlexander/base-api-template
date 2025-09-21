@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d50a44e86e6c0853f85059de11560d03",
+    "content-hash": "ea874fb56050d73d1a49d6951f7397ea",
     "packages": [
         {
             "name": "baseapi/baseapi",
-            "version": "v0.4.2",
+            "version": "dev-feature/queue",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TimAnthonyAlexander/base-api.git",
-                "reference": "78f3499af77803a88bfa41b5c2381472bc001afc"
+                "reference": "479b0eff9f901a3594ec8c6eaefc429ef5690ad9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TimAnthonyAlexander/base-api/zipball/78f3499af77803a88bfa41b5c2381472bc001afc",
-                "reference": "78f3499af77803a88bfa41b5c2381472bc001afc",
+                "url": "https://api.github.com/repos/TimAnthonyAlexander/base-api/zipball/479b0eff9f901a3594ec8c6eaefc429ef5690ad9",
+                "reference": "479b0eff9f901a3594ec8c6eaefc429ef5690ad9",
                 "shasum": ""
             },
             "require": {
@@ -66,9 +66,9 @@
             ],
             "support": {
                 "issues": "https://github.com/TimAnthonyAlexander/base-api/issues",
-                "source": "https://github.com/TimAnthonyAlexander/base-api/tree/v0.4.2"
+                "source": "https://github.com/TimAnthonyAlexander/base-api/tree/feature/queue"
             },
-            "time": "2025-09-21T10:07:07+00:00"
+            "time": "2025-09-21T11:41:52+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -2362,7 +2362,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {},
+    "stability-flags": {
+        "baseapi/baseapi": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

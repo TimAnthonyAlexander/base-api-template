@@ -18,7 +18,7 @@
     ],
     "require": {
         "php": ">=8.4",
-        "baseapi/baseapi": "v0.4.2"
+        "baseapi/baseapi": "dev-feature/queue"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.0",

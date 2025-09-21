@@ -20,12 +20,9 @@ class SignupController extends Controller
     public string $email = '';
     public string $password = '';
 
-    private EmailService $emailService;
-
-    public function __construct(EmailService $emailService)
-    {
-        $this->emailService = $emailService;
-    }
+    public function __construct(
+        private EmailService $emailService,
+    ) {}
 
     #[ResponseType(User::class)]
     public function post(): JsonResponse

@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use BaseApi\Controllers\Controller;
 use BaseApi\Http\JsonResponse;
-use BaseApi\Http\Request;
 use BaseApi\App;
 use App\Models\User;
 
@@ -44,10 +43,10 @@ class DebugExampleController extends Controller
     {
         // Queries are automatically logged when debug is enabled
         $userRows = User::where('id', '>', 0)->limit(5)->get();
-        
+
         // Manual memory tracking
         App::profiler()->trackMemory('after_user_query');
-        
+
         return JsonResponse::ok([
             'message' => 'Query example completed',
             'user_count' => count($userRows),
@@ -61,21 +60,21 @@ class DebugExampleController extends Controller
     private function profilingExample(): JsonResponse
     {
         // Manual profiling of a specific operation
-        $result = App::profiler()->profile('expensive_operation', function() {
+        $result = App::profiler()->profile('expensive_operation', function () {
             // Simulate some work
             usleep(50000); // 50ms
-            
+
             App::profiler()->trackMemory('during_work');
-            
+
             return [
                 'data' => range(1, 100),
                 'processed' => true
             ];
         });
-        
+
         // Track memory after operation
         App::profiler()->trackMemory('after_operation');
-        
+
         return JsonResponse::ok([
             'message' => 'Profiling example completed',
             'result' => $result,
@@ -91,7 +90,6 @@ class DebugExampleController extends Controller
         try {
             // This will throw an exception that gets tracked
             $this->simulateError();
-            
         } catch (\Exception $e) {
             // Exceptions are automatically logged, but you can add context
             App::profiler()->logException($e, [
@@ -99,10 +97,10 @@ class DebugExampleController extends Controller
                 'action' => 'exceptionExample',
                 'user_input' => 'test_data'
             ]);
-            
+
             return JsonResponse::error('Exception occurred (check debug data)', 500);
         }
-        
+
         return JsonResponse::ok(['message' => 'No exception occurred']);
     }
 
@@ -113,13 +111,13 @@ class DebugExampleController extends Controller
     {
         // Multiple queries to demonstrate query counting
         $userCount = User::where('id', '>', 0)->count();
-        
+
         // Another query for demonstration
         $activeUserCount = User::where('active', '=', true)->count();
-        
+
         // Simulate a slow database query by adding a sleep in a real query
         // This will show up as a slow query in the profiler
-        $slowQuery = App::profiler()->profile('slow_database_operation', function() {
+        $slowQuery = App::profiler()->profile('slow_database_operation', function () {
             // Simulate slow query with SLEEP (works on MySQL) or delay logic
             try {
                 return App::db()->raw("SELECT ?, SLEEP(0.15) as slow_operation", [1]);
@@ -129,12 +127,12 @@ class DebugExampleController extends Controller
                 return App::db()->raw("SELECT ? as slow_operation", [1]);
             }
         });
-        
+
         // Additional queries to increase query count
         $testQuery1 = User::where('active', '=', true)->limit(1)->get();
         $testQuery2 = User::where('active', '=', false)->limit(1)->get();
         $testQuery3 = User::where('id', '>', 0)->limit(5)->get();
-        
+
         return JsonResponse::ok([
             'message' => 'Slow query example completed',
             'total_users' => $userCount,
@@ -152,7 +150,7 @@ class DebugExampleController extends Controller
     private function debugInfo(): JsonResponse
     {
         $summary = App::profiler()->getSummary();
-        
+
         return JsonResponse::ok([
             'debug_enabled' => App::profiler()->isEnabled(),
             'app_debug' => App::config('app.debug', false),
