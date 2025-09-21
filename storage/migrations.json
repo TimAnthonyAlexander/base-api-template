@@ -18,6 +18,15 @@
             "table": "users",
             "operation": "add_index",
             "warning": null
+        },
+        {
+            "id": "mig_b009e29c291b",
+            "sql": "CREATE TABLE jobs (\n    id TEXT PRIMARY KEY,\n    queue TEXT NOT NULL DEFAULT 'default',\n    payload TEXT NOT NULL,\n    status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'processing', 'completed', 'failed')),\n    attempts INTEGER NOT NULL DEFAULT 0,\n    error TEXT,\n    run_at DATETIME NOT NULL,\n    started_at DATETIME,\n    completed_at DATETIME,\n    failed_at DATETIME,\n    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP\n)",
+            "destructive": false,
+            "generated_at": "2025-09-21T12:24:40+00:00",
+            "table": "jobs",
+            "operation": "create_table",
+            "description": "Create jobs table for queue system"
         }
     ]
 }
