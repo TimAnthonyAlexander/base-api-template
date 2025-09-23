@@ -16,12 +16,12 @@ final class OpenApiController extends Controller
     {
         try {
             // Generate fresh OpenAPI spec
-            $generator = new OpenApiGenerator();
-            $spec = $generator->generate();
+            $openApiGenerator = new OpenApiGenerator();
+            $spec = $openApiGenerator->generate();
 
             return new JsonResponse($spec);
-        } catch (Exception $e) {
-            return JsonResponse::error('Failed to generate OpenAPI specification: ' . $e->getMessage());
+        } catch (Exception $exception) {
+            return JsonResponse::error('Failed to generate OpenAPI specification: ' . $exception->getMessage());
         }
     }
 }
