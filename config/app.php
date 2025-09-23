@@ -11,7 +11,6 @@
  * Environment variables take precedence over these defaults, allowing for
  * flexible deployment-specific configuration without code changes.
  */
-
 return [
     /*
     |--------------------------------------------------------------------------
@@ -28,20 +27,22 @@ return [
         // Application environment: local, staging, production
         // Used for environment-specific behavior and error handling
         'env' => $_ENV['APP_ENV'] ?? 'local',
-        
+
         // Enable debug mode for detailed error messages and stack traces
         // Should be false in production for security and performance
         'debug' => $_ENV['APP_DEBUG'] ?? true,
-        
+
         // Full application URL used for asset generation and redirects
         // Must include protocol (http/https) and port if non-standard
         'url' => $_ENV['APP_URL'] ?? 'http://127.0.0.1:7879',
-        
+
         // Server host to bind to (0.0.0.0 for all interfaces, 127.0.0.1 for localhost only)
         'host' => $_ENV['APP_HOST'] ?? '127.0.0.1',
-        
+
         // Port number for the web server to listen on
         'port' => $_ENV['APP_PORT'] ?? 7879,
+
+        'response_time' => $_ENV['APP_RESPONSE_TIME'] ?? false,
     ],
 
     /*
@@ -90,22 +91,22 @@ return [
     'database' => [
         // Database server hostname or IP address
         'host' => $_ENV['DB_HOST'] ?? '127.0.0.1',
-        
+
         // Database server port (3306 for MySQL, 7878 is custom default)
         'port' => $_ENV['DB_PORT'] ?? 7878,
-        
+
         // Database name or SQLite file path
         'name' => $_ENV['DB_NAME'] ?? 'baseapi',
-        
+
         // Database username for authentication
         'user' => $_ENV['DB_USER'] ?? 'root',
-        
+
         // Database password for authentication
         'password' => $_ENV['DB_PASSWORD'] ?? '',
-        
+
         // Character set for database connections (utf8mb4 supports full Unicode)
         'charset' => 'utf8mb4',
-        
+
         // Whether to use persistent database connections (can improve performance)
         'persistent' => false,
     ],
@@ -125,7 +126,7 @@ return [
         // Default cache store to use when none specified
         // Options: 'array' (memory), 'file' (filesystem), 'redis'
         'default' => $_ENV['CACHE_DRIVER'] ?? 'file',
-        
+
         /*
         | Cache Store Definitions
         |
@@ -139,7 +140,7 @@ return [
                 'driver' => 'array',
                 'serialize' => false, // No need to serialize for memory storage
             ],
-            
+
             // File-based cache store (persistent across requests)
             // Good balance of performance and simplicity
             'file' => [
@@ -147,7 +148,7 @@ return [
                 'path' => $_ENV['CACHE_PATH'] ?? null, // Uses storage/cache by default when null
                 'permissions' => 0755, // File permissions for cache files
             ],
-            
+
             // Redis cache store (fastest persistent cache, supports advanced features)
             // Requires Redis server, best for production and distributed systems
             'redis' => [
@@ -161,21 +162,21 @@ return [
                 'read_timeout' => 60.0,  // Read timeout in seconds
             ],
         ],
-        
+
         // Cache key prefix to avoid collisions with other applications
         // All cache keys are prefixed with this string
         'prefix' => $_ENV['CACHE_PREFIX'] ?? 'baseapi_cache',
-        
+
         // Default TTL (time-to-live) in seconds when none specified
         // Framework default: 3600 seconds (1 hour)
         'default_ttl' => (int)($_ENV['CACHE_DEFAULT_TTL'] ?? 3600),
-        
+
         // Whether to serialize complex data types before storage
         // Required for file and Redis stores to handle objects/arrays
         'serialize' => true,
-        
+
         // Note: Model query caching is planned but not yet implemented
-        
+
         /*
         | HTTP Response Cache
         |
@@ -186,17 +187,17 @@ return [
             // Enable HTTP response caching middleware
             // Framework default: false (disabled by default)
             'enabled' => $_ENV['CACHE_RESPONSES'] ?? false,
-            
+
             // Default TTL for cached responses (10 minutes)
             'default_ttl' => (int)($_ENV['CACHE_RESPONSE_TTL'] ?? 600),
-            
+
             // Cache key prefix for response cache
             'prefix' => 'response',
-            
+
             // HTTP headers that affect cache key generation
             // Responses vary based on these headers (content negotiation, auth)
             'vary_headers' => ['Accept', 'Accept-Encoding', 'Authorization'],
-            
+
             // Query parameters to ignore when generating cache keys
             // Useful for cache-busting parameters and timestamps
             'ignore_query_params' => ['_t', 'timestamp', 'cache_bust'],
@@ -218,7 +219,7 @@ return [
         // Default disk to use when none specified
         // Framework default: 'local'
         'default' => $_ENV['FILESYSTEM_DISK'] ?? 'local',
-        
+
         /*
         | Filesystem Disks
         |
@@ -233,7 +234,7 @@ return [
                 'root' => 'storage/app', // Storage root directory
                 'url' => ($_ENV['APP_URL'] ?? 'http://localhost:7879') . '/storage', // Public URL base
             ],
-            
+
             // Public filesystem disk for publicly accessible files
             // Files stored in storage/app/public directory
             'public' => [

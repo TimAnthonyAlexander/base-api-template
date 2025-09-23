@@ -9,6 +9,7 @@ use App\Controllers\SignupController;
 use App\Controllers\FileUploadController;
 use App\Controllers\BenchmarkController;
 use App\Controllers\DebugExampleController;
+use App\Controllers\OpenApiController;
 use BaseApi\Http\Middleware\RateLimitMiddleware;
 use BaseApi\Http\Middleware\AuthMiddleware;
 use BaseApi\Http\Middleware\CsrfMiddleware;
@@ -112,9 +113,14 @@ $router->delete(
     ],
 );
 
-// Debug example endpoints (only available in development)
-// These demonstrate the debugging features of BaseAPI
 if (App::config('app.env') === 'local') {
+    $router->get(
+        '/openapi.json',
+        [
+            OpenApiController::class,
+        ],
+    );
+
     $router->get('/debug/query', [
         DebugMiddleware::class,
         DebugExampleController::class,
