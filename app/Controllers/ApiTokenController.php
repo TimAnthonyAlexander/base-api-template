@@ -6,12 +6,26 @@ use BaseApi\Models\BaseModel;
 use BaseApi\Http\JsonResponse;
 use App\Models\ApiToken;
 use BaseApi\Controllers\Controller;
+use BaseApi\Http\Attributes\ResponseType;
+use BaseApi\Http\Attributes\Tag;
 
+/**
+ * API Token management endpoint.
+ * Handles CRUD operations for API tokens used for authentication.
+ */
+#[Tag('Authentication')]
 class ApiTokenController extends Controller
 {
+    public string $name = '';
+
+    public ?string $expires_at = null;
+
+    public string $id = '';
+
     /**
      * List all API tokens for the authenticated user
      */
+    #[ResponseType(['tokens' => 'array'])]
     public function get(): JsonResponse
     {
         $user = $this->request->user;
@@ -41,6 +55,7 @@ class ApiTokenController extends Controller
     /**
      * Create a new API token
      */
+    #[ResponseType(['token' => 'string', 'id' => 'string', 'name' => 'string', 'expires_at' => 'string|null', 'created_at' => 'string'])]
     public function post(): JsonResponse
     {
         $user = $this->request->user;
@@ -51,8 +66,7 @@ class ApiTokenController extends Controller
 
         // Validate input
         $this->validate([
-            'name' => ['required', 'string', 'max:100'],
-            'expires_at' => ['nullable', 'date'],
+            'name' => 'required|string|max:100',
         ]);
 
         // Generate token
@@ -79,6 +93,7 @@ class ApiTokenController extends Controller
     /**
      * Delete an API token
      */
+    #[ResponseType(['message' => 'string'])]
     public function delete(): JsonResponse
     {
         $user = $this->request->user;
@@ -100,11 +115,4 @@ class ApiTokenController extends Controller
 
         return JsonResponse::ok(['message' => 'Token deleted successfully']);
     }
-
-    // Properties for parameter binding
-    public string $name = '';
-
-    public ?string $expires_at = null;
-
-    public string $id = '';
 }
