@@ -108,3 +108,4 @@ if (App::config('app.env') === 'local') {
     // OpenAPI schema for API documentation
     $router->get('/openapi.json', [OpenApiController::class]);
 }
+
