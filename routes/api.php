@@ -8,185 +8,103 @@ use App\Controllers\MeController;
 use App\Controllers\SignupController;
 use App\Controllers\FileUploadController;
 use App\Controllers\BenchmarkController;
-use App\Controllers\DebugExampleController;
 use App\Controllers\OpenApiController;
 use App\Controllers\ApiTokenController;
 use BaseApi\Http\Middleware\RateLimitMiddleware;
-use BaseApi\Http\Middleware\AuthMiddleware;
-use BaseApi\Http\Middleware\ApiTokenAuthMiddleware;
 use BaseApi\Http\Middleware\CombinedAuthMiddleware;
-use BaseApi\Http\Middleware\CsrfMiddleware;
-use BaseApi\Http\DebugMiddleware;
 
 $router = App::router();
+
+// ================================
+// Public Endpoints (No Auth)
+// ================================
+
+// Health check
+$router->get('/health', [
+    RateLimitMiddleware::class => ['limit' => '60/1m'],
+    HealthController::class,
+]);
 
 // Benchmark endpoint (no middleware for performance testing)
 $router->get('/benchmark', [BenchmarkController::class]);
 
-// Health check endpoints
-$router->get(
-    '/health',
-    [
-        RateLimitMiddleware::class => ['limit' => '60/1m'],
-        HealthController::class,
-    ],
-);
+// ================================  
+// Authentication Endpoints
+// ================================
 
-$router->post(
-    '/health',
-    [
-        HealthController::class,
-    ],
-);
+// User registration
+$router->post('/auth/signup', [
+    RateLimitMiddleware::class => ['limit' => '5/1m'],
+    SignupController::class,
+]);
 
-// Authentication endpoints
-$router->post(
-    '/auth/signup',
-    [
-        SignupController::class,
-    ],
-);
+// User login
+$router->post('/auth/login', [
+    RateLimitMiddleware::class => ['limit' => '10/1m'],
+    LoginController::class,
+]);
 
-$router->post(
-    '/auth/login',
-    [
-        LoginController::class,
-    ],
-);
+// User logout (supports both session and API token auth)
+$router->post('/auth/logout', [
+    CombinedAuthMiddleware::class,
+    LogoutController::class,
+]);
 
-$router->post(
-    '/auth/logout',
-    [
-        AuthMiddleware::class,
-        LogoutController::class,
-    ],
-);
+// ================================
+// Protected Endpoints (Combined Auth)
+// ================================
 
-// Protected endpoints
+// Get current user info (supports both session and API token)
+$router->get('/me', [
+    CombinedAuthMiddleware::class,
+    MeController::class,
+]);
 
-// Session-based authentication only (for web frontend)
-$router->get(
-    '/me',
-    [
-        AuthMiddleware::class,
-        CsrfMiddleware::class,
-        MeController::class,
-    ],
-);
+// API token management (supports both session and API token)
+$router->get('/api-tokens', [
+    CombinedAuthMiddleware::class,
+    ApiTokenController::class,
+]);
 
-// API token management endpoints (session-based auth only, for web interface)
-$router->get(
-    '/api-tokens',
-    [
-        AuthMiddleware::class,
-        ApiTokenController::class,
-    ],
-);
+$router->post('/api-tokens', [
+    CombinedAuthMiddleware::class,
+    RateLimitMiddleware::class => ['limit' => '10/1h'],
+    ApiTokenController::class,
+]);
 
-$router->post(
-    '/api-tokens',
-    [
-        AuthMiddleware::class,
-        ApiTokenController::class,
-    ],
-);
+$router->delete('/api-tokens/{id}', [
+    CombinedAuthMiddleware::class,
+    ApiTokenController::class,
+]);
 
-$router->delete(
-    '/api-tokens/{id}',
-    [
-        AuthMiddleware::class,
-        ApiTokenController::class,
-    ],
-);
+// ================================
+// File Upload Examples
+// ================================
 
-// API-only endpoints (token-based auth only, for external integrations)
-$router->get(
-    '/api/me',
-    [
-        ApiTokenAuthMiddleware::class,
-        MeController::class,
-    ],
-);
+// Basic file upload
+$router->post('/files/upload', [
+    CombinedAuthMiddleware::class,
+    RateLimitMiddleware::class => ['limit' => '10/1m'],
+    FileUploadController::class,
+]);
 
-// Dual authentication endpoints (supports both session and API token)
-$router->get(
-    '/profile',
-    [
-        CombinedAuthMiddleware::class,
-        MeController::class,
-    ],
-);
+// Get file info
+$router->get('/files/info', [
+    CombinedAuthMiddleware::class,
+    FileUploadController::class,
+]);
 
-// File upload endpoints
-$router->post(
-    '/files/upload',
-    [
-        RateLimitMiddleware::class => ['limit' => '10/1m'],
-        FileUploadController::class,
-    ],
-);
+// Delete files
+$router->delete('/files', [
+    CombinedAuthMiddleware::class,
+    FileUploadController::class,
+]);
 
-// Note: BaseAPI uses HTTP method-based routing
-// Each controller method corresponds to an HTTP verb (post, get, delete, etc.)
-// For multiple POST endpoints with different behavior, we need different paths
-// and the controller will handle routing internally based on the path
-
-$router->post(
-    '/files/upload-public',
-    [
-        RateLimitMiddleware::class => ['limit' => '10/1m'],
-        FileUploadController::class,
-    ],
-);
-
-$router->post(
-    '/files/upload-custom',
-    [
-        RateLimitMiddleware::class => ['limit' => '10/1m'],
-        FileUploadController::class,
-    ],
-);
-
-$router->get(
-    '/files/info',
-    [
-        FileUploadController::class,
-    ],
-);
-
-$router->delete(
-    '/files',
-    [
-        FileUploadController::class,
-    ],
-);
+// ================================
+// Development Only
+// ================================
 
 if (App::config('app.env') === 'local') {
-    $router->get(
-        '/openapi.json',
-        [
-            OpenApiController::class,
-        ],
-    );
-
-    $router->get('/debug/query', [
-        DebugMiddleware::class,
-        DebugExampleController::class,
-    ]);
-    $router->get('/debug/profiling', [
-        DebugMiddleware::class,
-        DebugExampleController::class,
-    ]);
-    $router->get('/debug/exception', [
-        DebugMiddleware::class,
-        DebugExampleController::class,
-    ]);
-    $router->get('/debug/slow-query', [
-        DebugMiddleware::class,
-        DebugExampleController::class,
-    ]);
-    $router->get('/debug/info', [
-        DebugMiddleware::class,
-        DebugExampleController::class,
-    ]);
+    // OpenAPI schema for API documentation
+    $router->get('/openapi.json', [OpenApiController::class]);
 }
