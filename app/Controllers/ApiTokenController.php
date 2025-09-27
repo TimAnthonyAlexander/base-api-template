@@ -39,12 +39,12 @@ class ApiTokenController extends Controller
             ->get();
 
         // Remove sensitive data from response
-        $tokenData = array_map(fn(ApiToken $token): array => [
-            'id' => $token->id,
-            'name' => $token->name,
-            'expires_at' => $token->expires_at,
-            'last_used_at' => $token->last_used_at,
-            'created_at' => $token->created_at,
+        $tokenData = array_map(fn(ApiToken $apiToken): array => [
+            'id' => $apiToken->id,
+            'name' => $apiToken->name,
+            'expires_at' => $apiToken->expires_at,
+            'last_used_at' => $apiToken->last_used_at,
+            'created_at' => $apiToken->created_at,
         ], $tokens);
 
         return JsonResponse::ok([

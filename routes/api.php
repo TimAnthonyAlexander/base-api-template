@@ -11,7 +11,7 @@ use App\Controllers\BenchmarkController;
 use App\Controllers\OpenApiController;
 use App\Controllers\ApiTokenController;
 use BaseApi\Http\Middleware\RateLimitMiddleware;
-use BaseApi\Http\Middleware\CombinedAuthMiddleware;
+use App\Middleware\CombinedAuthMiddleware;
 
 $router = App::router();
 

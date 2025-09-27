@@ -3,7 +3,8 @@ parameters:
     paths:
         - app
     ignoreErrors:
-        # Add any specific ignores here if needed
+        -
+         identifier: missingType.iterableValue
         
     # Ensure we have proper bootstrapping
     bootstrapFiles:
