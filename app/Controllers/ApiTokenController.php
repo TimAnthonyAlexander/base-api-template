@@ -3,9 +3,9 @@
 namespace App\Controllers;
 
 use BaseApi\Models\BaseModel;
-use BaseApi\Controller;
 use BaseApi\Http\JsonResponse;
 use App\Models\ApiToken;
+use BaseApi\Controllers\Controller;
 
 class ApiTokenController extends Controller
 {
@@ -25,12 +25,12 @@ class ApiTokenController extends Controller
             ->get();
 
         // Remove sensitive data from response
-        $tokenData = array_map(fn($token): array => [
-            'id' => $token['id'],
-            'name' => $token['name'],
-            'expires_at' => $token['expires_at'],
-            'last_used_at' => $token['last_used_at'],
-            'created_at' => $token['created_at'],
+        $tokenData = array_map(fn(ApiToken $token): array => [
+            'id' => $token->id,
+            'name' => $token->name,
+            'expires_at' => $token->expires_at,
+            'last_used_at' => $token->last_used_at,
+            'created_at' => $token->created_at,
         ], $tokens);
 
         return JsonResponse::ok([
@@ -50,14 +50,10 @@ class ApiTokenController extends Controller
         }
 
         // Validate input
-        $errors = $this->validate([
+        $this->validate([
             'name' => ['required', 'string', 'max:100'],
             'expires_at' => ['nullable', 'date'],
         ]);
-
-        if ($errors) {
-            return JsonResponse::validationError('Validation failed', $errors);
-        }
 
         // Generate token
         $plainToken = ApiToken::generateToken();
