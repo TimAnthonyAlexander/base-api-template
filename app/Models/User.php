@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use BaseApi\Database\Relations\HasMany;
 use BaseApi\Models\BaseModel;
 
 class User extends BaseModel
@@ -25,5 +26,10 @@ class User extends BaseModel
     public function checkPassword(string $password): bool
     {
         return password_verify($password, $this->password);
+    }
+    
+    public function apiTokens(): HasMany
+    {
+        return $this->hasMany(ApiToken::class);
     }
 }

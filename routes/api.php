@@ -10,8 +10,11 @@ use App\Controllers\FileUploadController;
 use App\Controllers\BenchmarkController;
 use App\Controllers\DebugExampleController;
 use App\Controllers\OpenApiController;
+use App\Controllers\ApiTokenController;
 use BaseApi\Http\Middleware\RateLimitMiddleware;
 use BaseApi\Http\Middleware\AuthMiddleware;
+use BaseApi\Http\Middleware\ApiTokenAuthMiddleware;
+use BaseApi\Http\Middleware\CombinedAuthMiddleware;
 use BaseApi\Http\Middleware\CsrfMiddleware;
 use BaseApi\Http\DebugMiddleware;
 
@@ -60,11 +63,56 @@ $router->post(
 );
 
 // Protected endpoints
+
+// Session-based authentication only (for web frontend)
 $router->get(
     '/me',
     [
         AuthMiddleware::class,
         CsrfMiddleware::class,
+        MeController::class,
+    ],
+);
+
+// API token management endpoints (session-based auth only, for web interface)
+$router->get(
+    '/api-tokens',
+    [
+        AuthMiddleware::class,
+        ApiTokenController::class,
+    ],
+);
+
+$router->post(
+    '/api-tokens',
+    [
+        AuthMiddleware::class,
+        ApiTokenController::class,
+    ],
+);
+
+$router->delete(
+    '/api-tokens/{id}',
+    [
+        AuthMiddleware::class,
+        ApiTokenController::class,
+    ],
+);
+
+// API-only endpoints (token-based auth only, for external integrations)
+$router->get(
+    '/api/me',
+    [
+        ApiTokenAuthMiddleware::class,
+        MeController::class,
+    ],
+);
+
+// Dual authentication endpoints (supports both session and API token)
+$router->get(
+    '/profile',
+    [
+        CombinedAuthMiddleware::class,
         MeController::class,
     ],
 );
