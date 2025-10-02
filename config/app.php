@@ -261,4 +261,28 @@ return [
         // Framework default: 'sync' (executes immediately)
         'default' => $_ENV['QUEUE_DRIVER'] ?? 'sync',
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Logging Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Configure where and how application logs are written. BaseAPI supports
+    | file-based logging (writes to storage/logs) and stderr logging (writes
+    | to PHP's error_log). Log levels filter messages by severity.
+    |
+    */
+    'logging' => [
+        // Logging channel: 'file' writes to storage/logs, 'stderr' writes to error_log
+        // Framework default: 'file'
+        'default' => $_ENV['LOG_CHANNEL'] ?? 'file',
+
+        // Log file path relative to application root
+        // Framework default: 'storage/logs/baseapi.log'
+        'path' => $_ENV['LOG_FILE'] ?? 'storage/logs/baseapi.log',
+
+        // Minimum log level: debug, info, warn, error
+        // Framework default: 'debug'
+        'level' => $_ENV['LOG_LEVEL'] ?? 'debug',
+    ],
 ];

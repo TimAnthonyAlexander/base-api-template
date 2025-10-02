@@ -1,6 +1,7 @@
 vendor
 .env
 storage/executed-migrations.json
+storage/logs/*.log
 
 # Rector cache
 var/cache/rector
