@@ -22,3 +22,4 @@ if ($uri !== '/' && file_exists($filePath) && is_file($filePath)) {
 // Otherwise, pass to the application
 require_once __DIR__ . '/index.php';
 
+
