@@ -1,15 +1,16 @@
 {
     "name": "BaseAPI Starter",
-    "image": "mcr.microsoft.com/devcontainers/php:8.4",
-    "features": {
-        "ghcr.io/devcontainers/features/common-utils:2": {}
+    "build": {
+        "dockerfile": "Dockerfile"
     },
-    "postCreateCommand": "composer install",
     "forwardPorts": [
         7879
     ],
     "remoteEnv": {
         "APP_HOST": "0.0.0.0",
-        "APP_PORT": "7879"
-    }
+        "APP_PORT": "7879",
+        "DB_DRIVER": "sqlite",
+        "DB_DATABASE": "/workspaces/base-api-template/database.sqlite"
+    },
+    "postCreateCommand": "composer install && touch /workspaces/base-api-template/database.sqlite"
 }
