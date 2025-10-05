@@ -10,3 +10,6 @@ RUN apt-get update \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 WORKDIR /workspaces/base-api-template
+
+# Copy default env so the app runs immediately
+RUN if [ -f ".env.example" ]; then cp .env.example .env; fi
