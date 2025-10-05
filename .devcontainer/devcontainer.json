@@ -1,0 +1,15 @@
+{
+    "name": "BaseAPI Starter",
+    "image": "mcr.microsoft.com/devcontainers/php:8.4",
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {}
+    },
+    "postCreateCommand": "composer install",
+    "forwardPorts": [
+        7879
+    ],
+    "remoteEnv": {
+        "APP_HOST": "0.0.0.0",
+        "APP_PORT": "7879"
+    }
+}
