@@ -18,7 +18,7 @@
     ],
     "require": {
         "php": "^8.4",
-        "baseapi/baseapi": "~v1.2.1"
+        "baseapi/baseapi": "~1.2.2"
     },
     "require-dev": {
         "phpstan/phpstan": "^1.12",
