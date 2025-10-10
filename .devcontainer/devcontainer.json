@@ -14,3 +14,4 @@
     },
     "postCreateCommand": "composer install && touch /workspaces/base-api-template/database.sqlite"
 }
+
