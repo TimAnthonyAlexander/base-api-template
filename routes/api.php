@@ -10,6 +10,7 @@ use App\Controllers\FileUploadController;
 use App\Controllers\BenchmarkController;
 use App\Controllers\OpenApiController;
 use App\Controllers\ApiTokenController;
+use App\Controllers\StreamController;
 use BaseApi\Http\Middleware\RateLimitMiddleware;
 use App\Middleware\CombinedAuthMiddleware;
 
@@ -107,5 +108,9 @@ $router->delete('/files', [
 if (App::config('app.env') === 'local') {
     // OpenAPI schema for API documentation
     $router->get('/openapi.json', [OpenApiController::class]);
-}
 
+    $router->get('/stream', [
+        RateLimitMiddleware::class => ['limit' => '10/1m'],
+        StreamController::class,
+    ]);
+}
