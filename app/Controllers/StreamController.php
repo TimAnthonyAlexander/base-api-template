@@ -7,6 +7,7 @@ namespace App\Controllers;
 use BaseApi\Controllers\Controller;
 use BaseApi\Http\StreamedResponse;
 use BaseApi\Http\JsonResponse;
+use BaseApi\Http\Response;
 use BaseApi\Modules\OpenAI;
 
 class StreamController extends Controller
@@ -20,15 +21,20 @@ class StreamController extends Controller
             'prompt' => 'required|string|min:1',
         ]);
 
-        $openAI = new OpenAI();
+        $ai = new OpenAI();
 
-        return StreamedResponse::sse(function () use ($openAI): void {
-            foreach ($openAI->stream($this->prompt) as $chunk) {
-                if (isset($chunk['delta'])) {
-                    echo "data: " . json_encode($chunk) . "\n\n";
+        return StreamedResponse::sse(function () use ($ai) {
+            foreach ($ai->stream($this->prompt) as $chunk) {
+                // Extract only the text delta from the response
+                if (isset($chunk['delta']) && is_string($chunk['delta'])) {
+                    echo "data: " . json_encode(['content' => $chunk['delta']]) . "\n\n";
                     flush();
                 }
             }
+            
+            // Send completion marker
+            echo "data: [DONE]\n\n";
+            flush();
         });
     }
 }
