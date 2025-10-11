@@ -8,14 +8,13 @@ use Generator;
 use BaseApi\Controllers\Controller;
 use BaseApi\Http\StreamedResponse;
 use BaseApi\Http\StreamHelper;
-use BaseApi\Http\JsonResponse;
 use BaseApi\Modules\OpenAI;
 
 class StreamController extends Controller
 {
     public string $prompt = '';
 
-    public function get(): StreamedResponse|JsonResponse
+    public function get(): StreamedResponse
     {
         $this->validate([
             'prompt' => 'required|string|min:1',
