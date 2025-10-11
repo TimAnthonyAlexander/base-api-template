@@ -4,11 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c30c68cac3c511f04f65b6c50815b01c",
+    "content-hash": "c6a22da8f59a138323fcfd2b2491bd8c",
     "packages": [
         {
             "name": "baseapi/baseapi",
-            "version": "v1.2.4.2",
+            "version": "v1.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TimAnthonyAlexander/base-api.git",
@@ -67,7 +67,7 @@
             ],
             "support": {
                 "issues": "https://github.com/TimAnthonyAlexander/base-api/issues",
-                "source": "https://github.com/TimAnthonyAlexander/base-api/tree/v1.2.4.2"
+                "source": "https://github.com/TimAnthonyAlexander/base-api/tree/v1.2.5"
             },
             "time": "2025-10-11T15:05:17+00:00"
         },
