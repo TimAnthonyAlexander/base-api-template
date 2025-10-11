@@ -18,7 +18,7 @@
     ],
     "require": {
         "php": "^8.4",
-        "baseapi/baseapi": "~v1.2.4"
+        "baseapi/baseapi": "dev-main"
     },
     "require-dev": {
         "phpstan/phpstan": "^1.12",
@@ -39,6 +39,7 @@
         "serve": "php mason serve",
         "serve-screen": "screen -dmS baseapi php mason serve",
         "phpstan": "phpstan analyse --memory-limit=256M",
+        "phpstan-baseline": "phpstan analyse --memory-limit=256M --generate-baseline",
         "post-create-project-cmd": [
             "@php -r \"copy('.env.example', '.env');\"",
             "@php -r \"if (!is_dir('storage')) mkdir('storage', 0755, true);\"",
