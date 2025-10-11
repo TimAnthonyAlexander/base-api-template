@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BaseAPI Streaming Example</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-top: 0;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .response {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 4px;
+            min-height: 100px;
+            line-height: 1.6;
+            display: none;
+        }
+        .response.active {
+            display: block;
+        }
+        .loading {
+            color: #666;
+            font-style: italic;
+        }
+        .error {
+            color: #d32f2f;
+            padding: 12px;
+            background: #ffebee;
+            border-left: 4px solid #d32f2f;
+            border-radius: 4px;
+            margin-top: 20px;
+            display: none;
+        }
+        .error.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 BaseAPI Streaming Example</h1>
+        <p>This demonstrates real-time AI streaming using Server-Sent Events (SSE) with BaseAPI.</p>
+        
+        <div class="input-group">
+            <label for="prompt">Enter your prompt:</label>
+            <input type="text" id="prompt" placeholder="Ask me anything..." value="Tell me about Munich">
+        </div>
+        
+        <button id="streamBtn" onclick="startStream()">Start Streaming</button>
+        
+        <div id="response" class="response"></div>
+        <div id="error" class="error"></div>
+    </div>
+
+    <script>
+        let eventSource = null;
+
+        function startStream() {
+            const prompt = document.getElementById('prompt').value.trim();
+            const responseDiv = document.getElementById('response');
+            const errorDiv = document.getElementById('error');
+            const button = document.getElementById('streamBtn');
+
+            if (!prompt) {
+                errorDiv.textContent = 'Please enter a prompt';
+                errorDiv.classList.add('active');
+                return;
+            }
+
+            // Reset UI
+            responseDiv.textContent = '';
+            responseDiv.classList.add('active');
+            errorDiv.classList.remove('active');
+            button.disabled = true;
+            button.textContent = 'Streaming...';
+
+            // Close existing connection if any
+            if (eventSource) {
+                eventSource.close();
+            }
+
+            // Create new EventSource connection
+            const url = `/stream?prompt=${encodeURIComponent(prompt)}`;
+            eventSource = new EventSource(url);
+
+            let streamComplete = false;
+            
+            eventSource.onmessage = (event) => {
+                if (event.data === '[DONE]') {
+                    streamComplete = true;
+                    eventSource.close();
+                    button.disabled = false;
+                    button.textContent = 'Start Streaming';
+                    return;
+                }
+
+                try {
+                    const data = JSON.parse(event.data);
+                    
+                    // Handle error from server
+                    if (data.error) {
+                        errorDiv.textContent = 'Error: ' + data.error;
+                        errorDiv.classList.add('active');
+                        eventSource.close();
+                        button.disabled = false;
+                        button.textContent = 'Start Streaming';
+                        return;
+                    }
+                    
+                    // Handle content
+                    if (data.content) {
+                        responseDiv.textContent += data.content;
+                        // Auto-scroll to bottom
+                        responseDiv.scrollTop = responseDiv.scrollHeight;
+                    }
+                } catch (e) {
+                    console.error('Failed to parse chunk:', e);
+                }
+            };
+
+            eventSource.onerror = (error) => {
+                // Only show error if stream didn't complete successfully
+                if (!streamComplete) {
+                    console.error('SSE error:', error);
+                    errorDiv.textContent = 'Connection error. Please try again.';
+                    errorDiv.classList.add('active');
+                }
+                
+                eventSource.close();
+                button.disabled = false;
+                button.textContent = 'Start Streaming';
+            };
+        }
+
+        // Handle Enter key in input
+        document.getElementById('prompt').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                startStream();
+            }
+        });
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (eventSource) {
+                eventSource.close();
+            }
+        });
+    </script>
+</body>
+</html>
+

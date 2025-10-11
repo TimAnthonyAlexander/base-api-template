@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use Exception;
 use BaseApi\Controllers\Controller;
 use BaseApi\Http\StreamedResponse;
 use BaseApi\Http\JsonResponse;
-use BaseApi\Http\Response;
 use BaseApi\Modules\OpenAI;
 
 class StreamController extends Controller
@@ -21,20 +21,50 @@ class StreamController extends Controller
             'prompt' => 'required|string|min:1',
         ]);
 
-        $ai = new OpenAI();
+        $openAI = new OpenAI();
 
-        return StreamedResponse::sse(function () use ($ai) {
-            foreach ($ai->stream($this->prompt) as $chunk) {
-                // Extract only the text delta from the response
-                if (isset($chunk['delta']) && is_string($chunk['delta'])) {
-                    echo "data: " . json_encode(['content' => $chunk['delta']]) . "\n\n";
+        return StreamedResponse::sse(function () use ($openAI): void {
+            // Ignore user abort to complete the stream properly
+            ignore_user_abort(true);
+            
+            try {
+                foreach ($openAI->stream($this->prompt) as $chunk) {
+                    // Check if connection is still alive
+                    if (connection_aborted() !== 0) {
+                        break;
+                    }
+                    
+                    // Extract only the text delta from the response
+                    if (isset($chunk['delta']) && is_string($chunk['delta'])) {
+                        echo "data: " . json_encode(['content' => $chunk['delta']]) . "\n\n";
+
+                        // Force immediate flush
+                        if (ob_get_level() > 0) {
+                            ob_flush();
+                        }
+
+                        flush();
+                    }
+                }
+                
+                // Send completion signal
+                if (connection_aborted() === 0) {
+                    echo "data: [DONE]\n\n";
+                    if (ob_get_level() > 0) {
+                        ob_flush();
+                    }
+
                     flush();
                 }
+            } catch (Exception $exception) {
+                // Send error to client
+                echo "data: " . json_encode(['error' => $exception->getMessage()]) . "\n\n";
+                if (ob_get_level() > 0) {
+                    ob_flush();
+                }
+
+                flush();
             }
-            
-            // Send completion marker
-            echo "data: [DONE]\n\n";
-            flush();
         });
     }
 }
