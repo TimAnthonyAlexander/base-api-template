@@ -11,6 +11,10 @@
  * Environment variables take precedence over these defaults, allowing for
  * flexible deployment-specific configuration without code changes.
  */
+
+use App\Providers\AppServiceProvider;
+use BaseApi\Permissions\PermissionsServiceProvider;
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -56,7 +60,8 @@ return [
     |
     */
     'providers' => [
-        \App\Providers\AppServiceProvider::class,
+        AppServiceProvider::class,
+        PermissionsServiceProvider::class,
     ],
 
     /*
