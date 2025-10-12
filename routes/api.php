@@ -12,6 +12,7 @@ use App\Controllers\OpenApiController;
 use App\Controllers\ApiTokenController;
 use App\Controllers\StreamController;
 use BaseApi\Http\Middleware\RateLimitMiddleware;
+use BaseApi\Permissions\PermissionsMiddleware;
 use App\Middleware\CombinedAuthMiddleware;
 
 $router = App::router();
@@ -95,11 +96,39 @@ $router->get('/files/info', [
     FileUploadController::class,
 ]);
 
-// Delete files
+// Delete files (with permission check example)
 $router->delete('/files', [
     CombinedAuthMiddleware::class,
+    PermissionsMiddleware::class => ['node' => 'files.delete'],
     FileUploadController::class,
 ]);
+
+// ================================
+// Permission-Protected Examples
+// ================================
+// 
+// Examples of using PermissionsMiddleware:
+//
+// $router->post('/admin/users', [
+//     CombinedAuthMiddleware::class,
+//     PermissionsMiddleware::class => ['node' => 'admin.users.create'],
+//     AdminUsersController::class,
+// ]);
+//
+// $router->get('/premium/content', [
+//     CombinedAuthMiddleware::class,
+//     PermissionsMiddleware::class => ['node' => 'content.premium'],
+//     PremiumContentController::class,
+// ]);
+//
+// Wildcard permission example:
+// $router->post('/export/csv', [
+//     CombinedAuthMiddleware::class,
+//     PermissionsMiddleware::class => ['node' => 'export.csv'],
+//     ExportController::class,
+// ]);
+// 
+// This would match permissions like 'export.*' or 'export.csv'
 
 // ================================
 // Development Only
