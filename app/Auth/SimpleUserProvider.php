@@ -45,7 +45,7 @@ class SimpleUserProvider implements UserProvider
     {
         try {
             $user = User::firstWhere('id', '=', $id);
-            if (!$user) {
+            if (!$user instanceof User) {
                 return false;
             }
 

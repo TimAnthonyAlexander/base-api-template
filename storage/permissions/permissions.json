@@ -1,0 +1,47 @@
+{
+    "groups": {
+        "guest": {
+            "inherits": [],
+            "weight": 0,
+            "permissions": {
+                "auth.login": true,
+                "auth.signup": true,
+                "content.read": true
+            }
+        },
+        "user": {
+            "inherits": [
+                "guest"
+            ],
+            "weight": 10,
+            "permissions": {
+                "content.create": true,
+                "content.comment": true,
+                "profile.edit": true
+            }
+        },
+        "premium": {
+            "inherits": [
+                "user"
+            ],
+            "weight": 50,
+            "permissions": {
+                "content.premium": true,
+                "export.*": true
+            }
+        },
+        "admin": {
+            "inherits": [
+                "premium"
+            ],
+            "weight": 100,
+            "permissions": {
+                "*": true
+            }
+        }
+    },
+    "meta": {
+        "createdAt": "2025-10-12T15:00:44+00:00",
+        "updatedAt": "2025-10-12T15:00:44+00:00"
+    }
+}
