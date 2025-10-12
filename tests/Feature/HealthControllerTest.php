@@ -2,40 +2,38 @@
 
 namespace App\Tests\Feature;
 
-use App\Controllers\HealthController;
-use BaseApi\Http\JsonResponse;
-use PHPUnit\Framework\TestCase;
+use BaseApi\Testing\TestCase;
 
 class HealthControllerTest extends TestCase
 {
-    public function test_health_controller_can_be_instantiated(): void
+    public function test_health_endpoint_returns_ok(): void
     {
-        $controller = new HealthController();
-        
-        $this->assertInstanceOf(HealthController::class, $controller);
-        $this->assertEquals('', $controller->db);
-        $this->assertEquals('', $controller->cache);
+        $this->get('/health')
+            ->assertStatus(200)
+            ->assertJsonPath('data.ok', true);
     }
 
-    public function test_health_controller_post_endpoint(): void
+    public function test_health_endpoint_with_database_check(): void
     {
-        $controller = new HealthController();
-        
-        $response = $controller->post();
-        
-        $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertEquals(200, $response->status);
-        $this->assertIsString($response->body);
+        $this->get('/health', ['db' => '1'])
+            ->assertStatus(200)
+            ->assertJsonPath('data.ok', true)
+            ->assertJsonPath('data.db', true);
     }
 
-    public function test_health_controller_properties_can_be_set(): void
+    public function test_health_endpoint_with_cache_check(): void
     {
-        $controller = new HealthController();
-        
-        $controller->db = '1';
-        $controller->cache = '1';
-        
-        $this->assertEquals('1', $controller->db);
-        $this->assertEquals('1', $controller->cache);
+        $this->get('/health', ['cache' => '1'])
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                'data' => [
+                    'ok',
+                    'cache' => [
+                        'working',
+                        'driver'
+                    ]
+                ]
+            ])
+            ->assertJsonPath('data.cache.working', true);
     }
 }
