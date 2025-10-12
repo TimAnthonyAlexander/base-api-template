@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e30934ba03d3ace42184a7dd0ccfefb3",
+    "content-hash": "bee9c80ceafcef973071fa86a7e3cc8b",
     "packages": [
         {
             "name": "baseapi/baseapi",
-            "version": "dev-main",
+            "version": "v1.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TimAnthonyAlexander/base-api.git",
-                "reference": "e859fbcd52a291bddfcfc066b5810337b35c63e1"
+                "reference": "d9686668042a02003b518703acfd940c6cd20f0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TimAnthonyAlexander/base-api/zipball/e859fbcd52a291bddfcfc066b5810337b35c63e1",
-                "reference": "e859fbcd52a291bddfcfc066b5810337b35c63e1",
+                "url": "https://api.github.com/repos/TimAnthonyAlexander/base-api/zipball/d9686668042a02003b518703acfd940c6cd20f0e",
+                "reference": "d9686668042a02003b518703acfd940c6cd20f0e",
                 "shasum": ""
             },
             "require": {
@@ -30,7 +30,6 @@
                 "phpunit/phpunit": "^11.0",
                 "rector/rector": "^1.2"
             },
-            "default-branch": true,
             "bin": [
                 "mason"
             ],
@@ -68,9 +67,9 @@
             ],
             "support": {
                 "issues": "https://github.com/TimAnthonyAlexander/base-api/issues",
-                "source": "https://github.com/TimAnthonyAlexander/base-api/tree/main"
+                "source": "https://github.com/TimAnthonyAlexander/base-api/tree/v1.3.3"
             },
-            "time": "2025-10-12T17:21:19+00:00"
+            "time": "2025-10-12T17:31:09+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -2423,9 +2422,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "baseapi/baseapi": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
