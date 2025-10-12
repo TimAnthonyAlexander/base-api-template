@@ -15,7 +15,7 @@ class User extends BaseModel
 
     public bool $active = true;
 
-    public string $role = 'user';
+    public string $role = 'guest';
 
     /**
      * Define indexes for this model
