@@ -15,6 +15,8 @@ class User extends BaseModel
 
     public bool $active = true;
 
+    public string $role = 'user';
+
     /**
      * Define indexes for this model
      * @var array<string, string>
@@ -27,7 +29,7 @@ class User extends BaseModel
     {
         return password_verify($password, $this->password);
     }
-    
+
     public function apiTokens(): HasMany
     {
         return $this->hasMany(ApiToken::class);

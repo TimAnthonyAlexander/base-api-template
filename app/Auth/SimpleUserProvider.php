@@ -28,4 +28,32 @@ class SimpleUserProvider implements UserProvider
             return null;
         }
     }
+
+    #[Override]
+    public function getRole(string $id): ?string
+    {
+        try {
+            $user = User::firstWhere('id', '=', $id);
+            return $user?->role ?? null;
+        } catch (Exception) {
+            return null;
+        }
+    }
+
+    #[Override]
+    public function setRole(string $id, string $role): bool
+    {
+        try {
+            $user = User::firstWhere('id', '=', $id);
+            if (!$user) {
+                return false;
+            }
+
+            $user->role = $role;
+            $user->save();
+            return true;
+        } catch (Exception) {
+            return false;
+        }
+    }
 }
