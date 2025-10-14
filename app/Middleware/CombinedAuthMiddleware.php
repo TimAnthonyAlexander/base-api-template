@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
+use Throwable;
 use App\Models\ApiToken;
 use Exception;
 use Override;
@@ -57,6 +58,7 @@ class CombinedAuthMiddleware implements Middleware
                 break;
             }
         }
+
         if (!is_string($authHeader) || strncasecmp($authHeader, 'Bearer ', 7) !== 0) {
             return null;
         }
@@ -77,8 +79,9 @@ class CombinedAuthMiddleware implements Middleware
             if ($user) {
                 $tokenModel->updateLastUsed();
             }
+
             return $user;
-        } catch (\Throwable) {
+        } catch (Throwable) {
             return null;
         }
     }
