@@ -28,6 +28,9 @@ return [
     |
     */
     'app' => [
+        // Application name used for display and identification
+        'name' => $_ENV['APP_NAME'] ?? 'BaseAPI',
+
         // Application environment: local, staging, production
         // Used for environment-specific behavior and error handling
         'env' => $_ENV['APP_ENV'] ?? 'local',
