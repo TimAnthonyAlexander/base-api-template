@@ -29,7 +29,7 @@ class CombinedAuthMiddleware implements Middleware
 
         // If no token auth, try session auth
         if (!$user) {
-            $user = $this->trySessionAuth();
+            $user = $this->trySessionAuth($request);
             $authMethod = 'session';
         }
 
@@ -86,21 +86,21 @@ class CombinedAuthMiddleware implements Middleware
     /**
      * Try to authenticate via session
      */
-    private function trySessionAuth(): ?array
+    private function trySessionAuth(Request $request): ?array
     {
         // Check if user_id is set in session
-        if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id'])) {
+        if (!isset($request->session['user_id']) || empty($request->session['user_id'])) {
             return null;
         }
 
         try {
             // Resolve user using UserProvider
             $userProvider = App::userProvider();
-            $user = $userProvider->byId($_SESSION['user_id']);
+            $user = $userProvider->byId($request->session['user_id']);
 
             if ($user === null) {
                 // User ID in session but user doesn't exist - clear invalid session
-                unset($_SESSION['user_id']);
+                unset($request->session['user_id']);
                 return null;
             }
 

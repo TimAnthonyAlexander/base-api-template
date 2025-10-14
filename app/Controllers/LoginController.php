@@ -33,7 +33,7 @@ class LoginController extends Controller
             return JsonResponse::error('Invalid credentials', 401);
         }
 
-        $_SESSION['user_id'] = $user->id ?? null;
+        $this->request->session['user_id'] = $user->id ?? null;
 
         // Regenerate session ID to mitigate fixation attacks
         session_regenerate_id(true);

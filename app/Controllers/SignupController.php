@@ -46,6 +46,7 @@ class SignupController extends Controller
         $user->name = $this->name;
         $user->email = $this->email;
         $user->password = password_hash($this->password, PASSWORD_DEFAULT);
+        $user->role = 'user';
         $user->active = true;
 
         if (!$user->save()) {
@@ -56,7 +57,7 @@ class SignupController extends Controller
         $this->emailService->sendWelcome($user->email, $user->name);
 
         // Log the user in automatically
-        $_SESSION['user_id'] = $user->id ?? null;
+        $this->request->session['user_id'] = $user->id ?? null;
 
         // Regenerate session ID for security
         session_regenerate_id(true);
