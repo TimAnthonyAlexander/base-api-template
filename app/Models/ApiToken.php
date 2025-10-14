@@ -8,15 +8,15 @@ use BaseApi\Models\BaseModel;
 class ApiToken extends BaseModel
 {
     public string $user_id = '';
-    
+
     public string $name = '';
-    
+
     public string $token_hash = '';
-    
+
     public ?string $expires_at = null;
-    
+
     public ?string $last_used_at = null;
-    
+
     /**
      * Define indexes for this model
      * @var array<string, string>
@@ -25,7 +25,7 @@ class ApiToken extends BaseModel
         'token_hash' => 'unique',
         'user_id' => 'index',
     ];
-    
+
     /**
      * Define custom columns for this model
      * @var array<string, array<string, mixed>>
@@ -36,24 +36,24 @@ class ApiToken extends BaseModel
         'expires_at' => ['type' => 'TEXT', 'nullable' => true],
         'last_used_at' => ['type' => 'TEXT', 'nullable' => true],
     ];
-    
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
-    
+
     /**
      * Check if token is expired
      */
     public function isExpired(): bool
     {
-        if ($this->expires_at === null) {
+        if ($this->expires_at === null || $this->expires_at === '') {
             return false;
         }
-        
+
         return strtotime($this->expires_at) < time();
     }
-    
+
     /**
      * Update last used timestamp
      */
@@ -62,7 +62,7 @@ class ApiToken extends BaseModel
         $this->last_used_at = date('Y-m-d H:i:s');
         $this->save();
     }
-    
+
     /**
      * Generate a secure API token
      */
@@ -70,7 +70,7 @@ class ApiToken extends BaseModel
     {
         return bin2hex(random_bytes(32)); // 64 character hex string
     }
-    
+
     /**
      * Hash a token for storage
      */
@@ -78,7 +78,7 @@ class ApiToken extends BaseModel
     {
         return hash('sha256', $token);
     }
-    
+
     /**
      * Find token by plain text token
      */
