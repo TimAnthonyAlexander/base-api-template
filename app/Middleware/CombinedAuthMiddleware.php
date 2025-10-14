@@ -50,43 +50,35 @@ class CombinedAuthMiddleware implements Middleware
      */
     private function tryApiTokenAuth(Request $request): ?array
     {
-        // Look for Authorization header with Bearer token
-        $authHeader = $request->headers['Authorization'] ?? $request->headers['authorization'] ?? null;
-
-        if (!$authHeader || !str_starts_with((string) $authHeader, 'Bearer ')) {
+        $authHeader = null;
+        foreach ($request->headers ?? [] as $k => $v) {
+            if (strcasecmp((string)$k, 'authorization') === 0) {
+                $authHeader = is_array($v) ? reset($v) : $v;
+                break;
+            }
+        }
+        if (!is_string($authHeader) || strncasecmp($authHeader, 'Bearer ', 7) !== 0) {
             return null;
         }
 
-        // Extract token from "Bearer <token>"
-        $token = substr((string) $authHeader, 7);
-
+        $token = trim(substr($authHeader, 7));
         if ($token === '' || $token === '0') {
             return null;
         }
 
         try {
             $tokenModel = ApiToken::findByToken($token);
-
-            if (!$tokenModel instanceof ApiToken) {
+            if (!$tokenModel instanceof ApiToken || $tokenModel->isExpired()) {
                 return null;
             }
 
-            // Check if token is expired
-            if ($tokenModel->isExpired()) {
-                return null;
-            }
-
-            // Get user via UserProvider
             $userProvider = App::userProvider();
             $user = $userProvider->byId($tokenModel->user_id);
-
             if ($user) {
-                // Update last used timestamp
                 $tokenModel->updateLastUsed();
             }
-
             return $user;
-        } catch (Exception) {
+        } catch (\Throwable) {
             return null;
         }
     }
