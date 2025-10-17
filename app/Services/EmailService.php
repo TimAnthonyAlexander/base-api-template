@@ -35,17 +35,16 @@ class EmailService
     {
         $this->logger->info(sprintf('Sending email to %s: %s', $to, $subject));
 
-        $env = (string)($this->config->get('app.env') ?? 'local');
+        $env = (string) ($this->config->get('app.env') ?? 'local');
 
         $dsn = $this->resolveDsn();
-        if ($dsn === null && $env !== 'production') {
-            // Safe default in non-production: do not attempt network I/O
+        if ($env !== 'production') {
             $this->logger->info('Email body: ' . $body);
             return true;
         }
 
         try {
-            $transport = Transport::fromDsn($dsn ?? 'null://null');
+            $transport = Transport::fromDsn($dsn);
             $mailer = new Mailer($transport);
 
             $fromAddress = (string)($this->config->get('mail.from.address') ?? 'noreply@localhost');
