@@ -97,6 +97,9 @@ return [
     |
     */
     'database' => [
+        // Database driver: mysql, sqlite, pgsql
+        // Honors either DB_DRIVER or DB_CONNECTION env variables
+        'driver' => $_ENV['DB_DRIVER'] ?? ($_ENV['DB_CONNECTION'] ?? 'mysql'),
         // Database server hostname or IP address
         'host' => $_ENV['DB_HOST'] ?? '127.0.0.1',
 
@@ -104,10 +107,11 @@ return [
         'port' => $_ENV['DB_PORT'] ?? 7878,
 
         // Database name or SQLite file path
-        'name' => $_ENV['DB_NAME'] ?? 'baseapi',
+        // Honors either DB_NAME or DB_DATABASE
+        'name' => $_ENV['DB_NAME'] ?? ($_ENV['DB_DATABASE'] ?? 'baseapi'),
 
         // Database username for authentication
-        'user' => $_ENV['DB_USER'] ?? 'root',
+        'user' => $_ENV['DB_USER'] ?? ($_ENV['DB_USERNAME'] ?? 'root'),
 
         // Database password for authentication
         'password' => $_ENV['DB_PASSWORD'] ?? '',
@@ -292,5 +296,47 @@ return [
         // Minimum log level: debug, info, warn, error
         // Framework default: 'debug'
         'level' => $_ENV['LOG_LEVEL'] ?? 'debug',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Mail Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Configure how your application sends email. Supports multiple transports
+    | including SMTP, Sendmail, SES, Mailgun, Postmark, and a Null transport
+    | for local development and testing. You may also provide a full DSN via
+    | MAIL_DSN to override individual settings.
+    |
+    | Common DSN examples:
+    |  - smtp://username:password@smtp.gmail.com:587?encryption=tls
+    |  - null://null (testing)
+    |  - sendmail://default
+    |
+    */
+    'mail' => [
+        // Driver to use when MAIL_DSN is not provided.
+        // Options: smtp, sendmail, ses, mailgun, postmark, null
+        'driver' => $_ENV['MAIL_DRIVER'] ?? 'smtp',
+
+        // Full DSN string. If set, overrides other settings.
+        'dsn' => $_ENV['MAIL_DSN'] ?? null,
+
+        // SMTP settings
+        'host' => $_ENV['MAIL_HOST'] ?? 'localhost',
+        'port' => (int)($_ENV['MAIL_PORT'] ?? 1025),
+        'username' => $_ENV['MAIL_USERNAME'] ?? null,
+        'password' => $_ENV['MAIL_PASSWORD'] ?? null,
+        // tls, ssl, or null
+        'encryption' => $_ENV['MAIL_ENCRYPTION'] ?? null,
+
+        // Sendmail binary path (used when driver=sendmail)
+        'sendmail_path' => $_ENV['MAIL_SENDMAIL_PATH'] ?? '/usr/sbin/sendmail -t -i',
+
+        // From address and name
+        'from' => [
+            'address' => $_ENV['MAIL_FROM_ADDRESS'] ?? 'noreply@localhost',
+            'name' => $_ENV['MAIL_FROM_NAME'] ?? ($_ENV['APP_NAME'] ?? 'BaseAPI'),
+        ],
     ],
 ];

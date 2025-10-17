@@ -19,39 +19,24 @@ class EmailServiceTest extends TestCase
         $this->assertInstanceOf(EmailService::class, $emailService);
     }
 
-    public function test_can_send_email_in_development(): void
+    public function test_can_send_email_with_null_transport(): void
     {
         $logger = $this->createMock(Logger::class);
         $config = $this->createMock(Config::class);
-        
-        $config->method('get')
-            ->with('app.env')
-            ->willReturn('development');
 
-        $logger->expects($this->exactly(2))
-            ->method('info');
+        $config->method('get')->willReturnMap([
+            ['app.env', null, 'testing'],
+            ['mail.dsn', null, 'null://null'],
+            ['mail.from.address', null, 'noreply@example.com'],
+            ['mail.from.name', null, 'BaseAPI'],
+            ['app.name', null, 'BaseAPI'],
+        ]);
 
-        $emailService = new EmailService($logger, $config);
-        $result = $emailService->send('test@example.com', 'Test Subject', 'Test Body');
-        
-        $this->assertTrue($result);
-    }
-
-    public function test_can_send_email_in_production(): void
-    {
-        $logger = $this->createMock(Logger::class);
-        $config = $this->createMock(Config::class);
-        
-        $config->method('get')
-            ->with('app.env')
-            ->willReturn('production');
-
-        $logger->expects($this->once())
-            ->method('info');
+        $logger->expects($this->atLeastOnce())->method('info');
 
         $emailService = new EmailService($logger, $config);
         $result = $emailService->send('test@example.com', 'Test Subject', 'Test Body');
-        
+
         $this->assertTrue($result);
     }
 
@@ -59,19 +44,20 @@ class EmailServiceTest extends TestCase
     {
         $logger = $this->createMock(Logger::class);
         $config = $this->createMock(Config::class);
-        
-        $config->method('get')
-            ->willReturnMap([
-                ['app.env', null, 'development'],
-                ['app.name', 'BaseAPI', 'MyApp']
-            ]);
 
-        $logger->expects($this->exactly(2))
-            ->method('info');
+        $config->method('get')->willReturnMap([
+            ['app.env', null, 'testing'],
+            ['app.name', null, 'MyApp'],
+            ['mail.dsn', null, 'null://null'],
+            ['mail.from.address', null, 'noreply@example.com'],
+            ['mail.from.name', null, 'MyApp'],
+        ]);
+
+        $logger->expects($this->atLeastOnce())->method('info');
 
         $emailService = new EmailService($logger, $config);
         $result = $emailService->sendWelcome('user@example.com', 'John Doe');
-        
+
         $this->assertTrue($result);
     }
 
@@ -79,19 +65,20 @@ class EmailServiceTest extends TestCase
     {
         $logger = $this->createMock(Logger::class);
         $config = $this->createMock(Config::class);
-        
-        $config->method('get')
-            ->willReturnMap([
-                ['app.env', null, 'development'],
-                ['app.name', 'BaseAPI', 'BaseAPI']
-            ]);
 
-        $logger->expects($this->exactly(2))
-            ->method('info');
+        $config->method('get')->willReturnMap([
+            ['app.env', null, 'testing'],
+            ['app.name', null, 'BaseAPI'],
+            ['mail.dsn', null, 'null://null'],
+            ['mail.from.address', null, 'noreply@example.com'],
+            ['mail.from.name', null, 'BaseAPI'],
+        ]);
+
+        $logger->expects($this->atLeastOnce())->method('info');
 
         $emailService = new EmailService($logger, $config);
         $result = $emailService->sendWelcome('user@example.com', 'Jane Doe');
-        
+
         $this->assertTrue($result);
     }
 }
