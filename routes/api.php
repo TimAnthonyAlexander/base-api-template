@@ -38,19 +38,19 @@ $router->get('/benchmark', [BenchmarkController::class]);
 $router->post('/auth/signup', [
     RateLimitMiddleware::class => ['limit' => '5/1m'],
     SignupController::class,
-], needsSession: true);
+]);
 
 // User login
 $router->post('/auth/login', [
     RateLimitMiddleware::class => ['limit' => '10/1m'],
     LoginController::class,
-], needsSession: true);
+]);
 
 // User logout (supports both session and API token auth)
 $router->post('/auth/logout', [
     CombinedAuthMiddleware::class,
     LogoutController::class,
-], needsSession: true);
+]);
 
 // ================================
 // Protected Endpoints (Combined Auth)
