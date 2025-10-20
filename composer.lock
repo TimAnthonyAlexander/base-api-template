@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a8be830eeb02607769861d7bd14e38d8",
+    "content-hash": "0d3d781ead6dad73aae0d759fd2ba3e6",
     "packages": [
         {
             "name": "baseapi/baseapi",
-            "version": "v1.6.1",
+            "version": "v1.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TimAnthonyAlexander/base-api.git",
-                "reference": "1e3cbf2bd0523ad48b1c814f3e5dd11515eaddcd"
+                "reference": "5991b5d6ee1b63da0d9e2ed6bdda91c38d317871"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TimAnthonyAlexander/base-api/zipball/1e3cbf2bd0523ad48b1c814f3e5dd11515eaddcd",
-                "reference": "1e3cbf2bd0523ad48b1c814f3e5dd11515eaddcd",
+                "url": "https://api.github.com/repos/TimAnthonyAlexander/base-api/zipball/5991b5d6ee1b63da0d9e2ed6bdda91c38d317871",
+                "reference": "5991b5d6ee1b63da0d9e2ed6bdda91c38d317871",
                 "shasum": ""
             },
             "require": {
@@ -68,9 +68,9 @@
             ],
             "support": {
                 "issues": "https://github.com/TimAnthonyAlexander/base-api/issues",
-                "source": "https://github.com/TimAnthonyAlexander/base-api/tree/v1.6.1"
+                "source": "https://github.com/TimAnthonyAlexander/base-api/tree/v1.6.2"
             },
-            "time": "2025-10-19T13:00:03+00:00"
+            "time": "2025-10-20T12:53:58+00:00"
         },
         {
             "name": "doctrine/lexer",
