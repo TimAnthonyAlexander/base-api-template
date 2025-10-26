@@ -12,6 +12,7 @@ use App\Controllers\OpenApiController;
 use App\Controllers\ApiTokenController;
 use App\Controllers\StreamController;
 use BaseApi\Http\Middleware\RateLimitMiddleware;
+use BaseApi\Http\SessionStartMiddleware;
 use BaseApi\Permissions\PermissionsMiddleware;
 use App\Middleware\CombinedAuthMiddleware;
 
@@ -36,18 +37,21 @@ $router->get('/benchmark', [BenchmarkController::class]);
 
 // User registration
 $router->post('/auth/signup', [
+    SessionStartMiddleware::class,
     RateLimitMiddleware::class => ['limit' => '5/1m'],
     SignupController::class,
 ]);
 
 // User login
 $router->post('/auth/login', [
+    SessionStartMiddleware::class,
     RateLimitMiddleware::class => ['limit' => '10/1m'],
     LoginController::class,
 ]);
 
 // User logout (supports both session and API token auth)
 $router->post('/auth/logout', [
+    SessionStartMiddleware::class,
     CombinedAuthMiddleware::class,
     LogoutController::class,
 ]);
