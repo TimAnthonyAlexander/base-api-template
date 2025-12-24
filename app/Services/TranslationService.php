@@ -44,7 +44,7 @@ class TranslationService
             $text = $this->cache['en'][$namespace][$key] ?? null;
         }
 
-        $text = $text ?? $key;
+        $text ??= $key;
 
         // 5. Replace params
         return $this->replaceParams($text, $params);
@@ -54,8 +54,6 @@ class TranslationService
      * Get all translations for a language, optionally filtering by admin access.
      * Used used primarily by the frontend to load all strings.
      *
-     * @param string $lang
-     * @param bool $includeAdmin
      * @return array<string, string> Merged translations
      */
     public function getAll(string $lang, bool $includeAdmin = false): array
@@ -131,6 +129,7 @@ class TranslationService
             // Support :param style as well used in some Laravel-style translations
             $text = str_replace(':' . $k, (string)$v, $text);
         }
+
         return $text;
     }
 
