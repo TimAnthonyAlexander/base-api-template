@@ -9,7 +9,7 @@ use BaseApi\Config;
  */
 class TranslationService
 {
-    /** @var array<string, array<string, string>> */
+    /** @var array<string, array<string, array<string, string>>> */
     private array $cache = [];
 
     public function __construct(
@@ -44,7 +44,9 @@ class TranslationService
             $text = $this->cache['en'][$namespace][$key] ?? null;
         }
 
-        $text ??= $key;
+        if ($text === null) {
+            $text = $key;
+        }
 
         // 5. Replace params
         return $this->replaceParams($text, $params);
