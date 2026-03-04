@@ -54,6 +54,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Response Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Controls the shape of JSON API responses. When wrap_data is false,
+    | response payloads are returned at the root level instead of being
+    | wrapped in a { data: ... } envelope.
+    |
+    */
+    'response' => [
+        'wrap_data' => filter_var($_ENV['RESPONSE_WRAP_DATA'] ?? false, FILTER_VALIDATE_BOOLEAN),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Service Providers
     |--------------------------------------------------------------------------
     |
