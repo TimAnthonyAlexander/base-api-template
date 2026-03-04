@@ -282,6 +282,13 @@ return [
     | Only the driver needs to be configured here.
     |
     */
+    /*
+    |--------------------------------------------------------------------------
+    | Internationalization (i18n)
+    |--------------------------------------------------------------------------
+    */
+    'i18n' => require __DIR__ . '/i18n.php',
+
     'queue' => [
         // Default queue driver: 'sync' (development), 'database' (production)
         // Framework default: 'sync' (executes immediately)
