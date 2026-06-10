@@ -56,12 +56,18 @@ class SignupController extends Controller
         // Send welcome email using injected service
         $this->emailService->sendWelcome($user->email, $user->name);
 
-        // Log the user in automatically
-        $this->request->session['user_id'] = $user->id ?? null;
+        // Log the user in automatically. Write $_SESSION directly: assigning to
+        // $this->request->session only mutates a by-value copy on the Request
+        // object, which PHP never persists — so the new user would be logged
+        // out on their very next request.
+        $_SESSION['user_id'] = $user->id;
 
-        // Regenerate session ID for security
-        session_regenerate_id(true);
+        // Regenerate session ID for security (guarded so it does not warn when
+        // no session is active, e.g. in tests).
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_regenerate_id(true);
+        }
 
-        return JsonResponse::ok($user->jsonSerialize());
+        return JsonResponse::created($user->jsonSerialize());
     }
 }
