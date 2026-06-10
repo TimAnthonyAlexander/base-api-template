@@ -10,15 +10,15 @@ class HealthControllerTest extends TestCase
     {
         $this->get('/health')
             ->assertStatus(200)
-            ->assertJsonPath('data.ok', true);
+            ->assertJsonPath('ok', true);
     }
 
     public function test_health_endpoint_with_database_check(): void
     {
         $this->get('/health', ['db' => '1'])
             ->assertStatus(200)
-            ->assertJsonPath('data.ok', true)
-            ->assertJsonPath('data.db', true);
+            ->assertJsonPath('ok', true)
+            ->assertJsonPath('db', true);
     }
 
     public function test_health_endpoint_with_cache_check(): void
@@ -26,14 +26,12 @@ class HealthControllerTest extends TestCase
         $this->get('/health', ['cache' => '1'])
             ->assertStatus(200)
             ->assertJsonStructure([
-                'data' => [
-                    'ok',
-                    'cache' => [
-                        'working',
-                        'driver'
-                    ]
+                'ok',
+                'cache' => [
+                    'working',
+                    'driver'
                 ]
             ])
-            ->assertJsonPath('data.cache.working', true);
+            ->assertJsonPath('cache.working', true);
     }
 }

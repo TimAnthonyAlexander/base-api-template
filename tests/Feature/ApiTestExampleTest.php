@@ -28,8 +28,8 @@ class ApiTestExampleTest extends TestCase
     {
         $this->get('/health', ['db' => '1', 'cache' => '1'])
             ->assertStatus(200)
-            ->assertJsonHas('data')
-            ->assertJsonPath('data.db', true);
+            ->assertJsonHas('ok')
+            ->assertJsonPath('db', true);
     }
 
     /**
@@ -40,12 +40,10 @@ class ApiTestExampleTest extends TestCase
         $this->get('/health', ['cache' => '1'])
             ->assertOk()
             ->assertJsonStructure([
-                'data' => [
-                    'ok',
-                    'cache' => [
-                        'working',
-                        'driver'
-                    ]
+                'ok',
+                'cache' => [
+                    'working',
+                    'driver'
                 ]
             ]);
     }
@@ -57,7 +55,7 @@ class ApiTestExampleTest extends TestCase
     {
         $this->get('/health')
             ->assertOk()
-            ->assertJsonPath('data.ok', true);
+            ->assertJsonPath('ok', true);
     }
 
     /**
@@ -67,7 +65,7 @@ class ApiTestExampleTest extends TestCase
     {
         $this->get('/health')
             ->assertOk()
-            ->assertJsonFragment(['data' => ['ok' => true]]);
+            ->assertJsonFragment(['ok' => true]);
     }
 
     /**
@@ -77,8 +75,8 @@ class ApiTestExampleTest extends TestCase
     {
         $this->get('/health')
             ->assertOk()
-            ->assertJsonHas('data')
-            ->assertJsonPath('data.ok', true)
+            ->assertJsonHas('ok')
+            ->assertJsonPath('ok', true)
             ->assertHeader('Content-Type', 'application/json; charset=utf-8');
     }
 
