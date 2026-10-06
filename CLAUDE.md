@@ -3,7 +3,8 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 > Starter rules for a project scaffolded from the BaseAPI template
-> (PHP 8.4+, `timanthonyalexander/base-api`, the `mason` CLI). Extend per project,
+> (PHP 8.4+, `baseapi/baseapi` on Packagist, GitHub `timanthonyalexander/base-api`,
+> the `mason` CLI). Extend per project,
 > but the conventions below are framework-level and apply everywhere.
 
 ## Table Naming (CRITICAL)
@@ -52,3 +53,38 @@ reaches staging/prod.
   `$indexes` for types and indexes. No automatic timestamps — manage `created_at` /
   `updated_at` manually unless the model opts in.
 - After any model/schema change, run the migration workflow above.
+
+## JSON Responses (no `{ data }` wrapper by default)
+
+`config/app.php` sets `response.wrap_data` from `RESPONSE_WRAP_DATA`, defaulting to
+`false`. So by default there is **no wrapper**: `JsonResponse::ok($payload)` and
+`::created($payload)` send the payload itself at the top level, with no `data` and no
+`success` key.
+
+```json
+{ "id": "…", "name": "Widget" }
+```
+
+Setting `RESPONSE_WRAP_DATA=true` in `.env` wraps every success payload that does not
+pass `$wrap` explicitly: `{ "data": { "id": "…", "name": "Widget" } }`. Some projects
+run with it on, so check `.env` before assuming a shape. Do not delete the
+`response.wrap_data` line from `config/app.php` on baseapi older than v1.9.10: before
+that version the framework's own fallback was `true`. From v1.9.10 the framework
+default is also off and also reads `RESPONSE_WRAP_DATA`.
+
+A call site can force either way: `ok($payload, 200, true|false)`,
+`created($payload, true|false)`. `success()` and `paginated()` also follow the setting:
+wrapped they return `{ "success": true, "data", "meta" }` (plus `"pagination"`),
+unwrapped `success()` merges `$data` into the top level next to `"meta"` and
+`paginated()` returns `{ "items", "pagination", "meta" }`.
+
+Errors are the same in both modes:
+
+```json
+{ "error": "Not Found", "requestId": "…" }
+{ "error": "Validation failed.", "requestId": "…", "errors": { "email": "…" } }
+```
+
+The second is a failed `$this->validate()` (HTTP 400). `forbidden()` (403),
+`unprocessable()` and `validationError()` (422) instead return
+`{ "success": false, "error", "meta": { "timestamp", "request_id" } }`.
