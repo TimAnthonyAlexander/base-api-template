@@ -53,6 +53,10 @@ reaches staging/prod.
   `$indexes` for types and indexes. No automatic timestamps — manage `created_at` /
   `updated_at` manually unless the model opts in.
 - After any model/schema change, run the migration workflow above.
+- `Model::all()` without arguments: this template's `.env` sets `MODEL_ALL_STRICT=true`, so it
+  returns every row or throws `TooManyRowsException` above `MODEL_ALL_MAX` (default 10000).
+  Without the flag it returns only the first 1000 rows. For big tables use `chunkById()`,
+  `paginate()` or an aggregate query.
 
 ## JSON Responses (no `{ data }` wrapper by default)
 
